@@ -6,7 +6,8 @@
 Usage: download_save_data.R <url_link> --file_path=<file_path> [--file_name=<file_name>] [--delimiter=<delimiter>]
 
 Options:
-<url_link>     A url link to a single data table, or a zip file with many files. If a .zip file is given, an argument to file_name must be given. 
+<url_link>                  A url link to a single data table, or a zip file with many files. If a .zip file is given, an argument to file_name must be given.
+--file_path==<file_path>    The path to store the downloaded csv file in. Assumes this is given as an absolute path.
 [--file_name=<file_name>]   An optional argument that gives the file name of the data table, for use if a .zip file is provided.
 [--delimiter=<delimiter>]   A delimiter to provide. Optional. If none is provided, a comma is assumed.
 " -> doc
@@ -14,6 +15,20 @@ Options:
 library(tidyverse)
 library(docopt)
 
+#' This function grabs data from a speciified url and stores the file (named data.csv) in a specified file path. 
+#'
+#' @param url_link A character vector of length one that provides a URL linking to either a data table directly or a .zip file.
+#' @param file_path A character vector of length one that specifies the path in which to store the downloaded data table as a csv file.
+#' @param file_name A character vector of length one that gives the file name of the data in a .zip file. Only needed if the url_link
+#'  provided points to a .zip file. Default = NULL.
+#' @param delimiter The delimiter that seprates cells in the file. Default = NULL, in which case commas are assumed.
+#'
+#' @return NA
+#' @export
+#'
+#' @examples
+#'  main(
+#'  "https://archive.ics.uci.edu/ml/machine-learning-databases/00320/student.zip", "repo/data", file_name = "set1.csv", delimiter = ";")
 main <- function(url_link, file_path, file_name = NULL, delimiter = NULL) {
   
   if (str_detect(string = url_link, pattern = ".zip") == TRUE) {
