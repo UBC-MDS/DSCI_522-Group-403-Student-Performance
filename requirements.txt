@@ -9,6 +9,6 @@ typing
 sklearn
 ipython
 altair>=2.2.0
+ipywidgets==7.5
 vega_datasets
-jupyterlab>=0.32.0
 pandas_profiling
