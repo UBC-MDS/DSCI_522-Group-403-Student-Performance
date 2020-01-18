@@ -57,4 +57,4 @@ Our research direction is to determine the top predictors for grade prediction o
 <u>EDA:</u>  
 An initial general heatmap of correlation strength between attributes will be used to identify relevant features for prediction of `g3`. Thereafter,  boxplots will be used to show the relationship across categorical/binary attributes with respect to the grades, and scatter plots will be used for count data attributes. Visualising the distributions will also help us spot any outliers in our dataset. As mentioned, EDA will only be done for the training dataset. 
 
-Visual plots will be done with `Altair` and `Pandas Profiling`, and supplemented with summary statistics. All these are located in this [EDA script](./src/eda). Please note that to run our EDA Notebook, ensure that you have `Pandas Profiling` version 2.4.0 or later.
+Visual plots will be done with `Altair` and `Pandas Profiling`, and supplemented with summary statistics. All these are located in this [EDA script](./src/EDA.ipynb). Please note that to run our EDA Notebook, ensure that you have `Pandas Profiling` version 2.4.0 or later.
