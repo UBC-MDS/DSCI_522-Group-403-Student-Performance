@@ -8,7 +8,7 @@ toolz
 typing
 sklearn
 ipython
-altair>=2.2.0
+altair==3.0.0
 ipywidgets==7.5
 vega_datasets
 pandas_profiling
