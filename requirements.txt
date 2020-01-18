@@ -1,6 +1,7 @@
 numpy==1.16.*
 matplotlib==3.*
 altair
+vega 
 pandas_profiling
 sklearn
 pandas
