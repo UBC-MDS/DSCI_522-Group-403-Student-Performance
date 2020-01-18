@@ -28,11 +28,11 @@ def main(url_link, file_path):
     ----------
     url_link: str
         A str that gives a web URL to a .zip file to be downloaded. The link must be
-        valid.
+        valid, or else an error will be thrown.
     
     file_path: str
         A str that provides an absolute file path in which the extracted .zip file will
-        be stored.
+        be stored. Cannot be null, otherwise an error will be thrown.
     
     Returns
     ---------
@@ -74,7 +74,7 @@ def check_valid_url():
     ----------
     None, if the test has passed, and a Failed message if the test has not passed.
     
-    Examples:
+    Examples
     ----------
     check_valid_url()
     
@@ -96,7 +96,7 @@ def check_file_path():
     ----------
     None, if the test has passed, and a Failed message if the test has not passed.
     
-    Examples:
+    Examples
     ----------
     check_file_path()
     
