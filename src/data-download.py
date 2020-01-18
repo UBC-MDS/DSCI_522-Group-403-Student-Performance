@@ -42,7 +42,7 @@ def main(url_link, file_path):
     ---------
     main(
         url_link="https://archive.ics.uci.edu/ml/machine-learning-databases/00320/student.zip",
-        file_path="data"
+        file_path="data/raw"
     )
 
     """
