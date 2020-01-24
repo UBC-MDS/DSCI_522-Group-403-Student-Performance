@@ -82,7 +82,7 @@ develop.
 
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
-**Figure 3 - Ridgeplot of Absences Feature**
+**Figure 3 - Ridgeplot of Absences Feature **
 
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of
 `absences` counts, indicating this may be a useful predictive feature as
@@ -102,25 +102,55 @@ ends up pulling down the mean value slightly.
 To answer the predictive question posed above, we built and compared
 several predictive regression models. We constructed the following
 models, optimizing each according to the specified hyperparameters.
-Model performance was evaluated using RMSE.
+Model performance was evaluated using root mean squared error (RMSE).
 
-**Figure 5**
+A total of 5 models were chosen using Scikit Learn (Buitinck et al.
+2013), XGBoost (Chen and Guestrin 2016), and Light GBM (Ke et al. 2017):
 
-**Figure 6**
+  - Linear Regression with Lasso (L1)  
+  - Linear Regression with Ridge (L2)  
+  - Random Forest (L1)  
+  - XGBoost Regressor  
+  - LightGBM Regressor
 
-We found that the RandomForest model performed best with a RMSE of xyz
-(figure/table?).
+The choice for model types stem from the feature extraction
+functionalities that they provide, which suit our analysis of top
+predictors features. Linear regression models can output the weights of
+each feature, while tree models can output the feature importances
+according to the node splitting.
 
-#### TODO: Do we need to justify model choices more? simplified version of what tiffanys done below?
+We applied the following preprocessing techniques for the data:
 
-    Given that all measurements are continuous in nature, and the outcome we are trying to predict is one of two classes, one suitable and simple approach that we plan to first explore is using a k-nearest neighbours classification algorithm. 
-    
-    - With this algorithm, we will have to choose K, the number of nearest neighbours to use for prediction. 
-    - We will choose K via cross-validation using ~ 30 folds because this Wisconsin Breast Cancer data set is not very large, having only 569 observations. We will use overall accuracy to choose K. 
-    - A line plot of overall accuracy versus $K$ will be included as part of the final report for this project.
+  - Standard Scaling for numerical features
+  - One-Hot-Encoding for binary/categorical features.
 
-Table of CV dsscores from each model (kable), hyperlink to the full
-hyperparameter outputs
+Hyperparameters were tuned with the Bayesian Optimization package
+(Nogueira 2017) using 10 fold cross validation. For more details on the
+best hyperparameters for each model, please find the stored outputs in
+the [data outputs folder](../data/outputs/). The validation results for
+each model type is shown in the following:
+
+| Model        | cv\_rmse\_score |
+| :----------- | --------------: |
+| lm\_lasso    |        2.740778 |
+| lm\_ridge    |        2.735043 |
+| randomforest |        2.670020 |
+| xgb          |        2.704398 |
+| lgbm         |        2.726576 |
+
+Using the preprocessed test data, we scored all 5 of the tuned models.
+The test results for each tuned model type is as shown:
+
+| Model        | test\_rmse\_score |
+| :----------- | ----------------: |
+| randomforest |          2.417248 |
+| xgb          |          2.452847 |
+| lm\_ridge    |          2.481202 |
+| lm\_lasso    |          2.483605 |
+| lgbm         |          2.577540 |
+
+Based on the results, the RandomForest model performed best with a RMSE
+of 2.417.
 
 ## Ranked Features & Conclusions
 
@@ -202,6 +232,25 @@ such a response.
 
 <div id="refs" class="references">
 
+<div id="ref-sklearn_api">
+
+Buitinck, Lars, Gilles Louppe, Mathieu Blondel, Fabian Pedregosa,
+Andreas Mueller, Olivier Grisel, Vlad Niculae, et al. 2013. “API Design
+for Machine Learning Software: Experiences from the Scikit-Learn
+Project.” In *ECML Pkdd Workshop: Languages for Data Mining and Machine
+Learning*, 108–22.
+
+</div>
+
+<div id="ref-Chen:2016:XST:2939672.2939785">
+
+Chen, Tianqi, and Carlos Guestrin. 2016. “XGBoost: A Scalable Tree
+Boosting System.” In *Proceedings of the 22nd Acm Sigkdd International
+Conference on Knowledge Discovery and Data Mining*, 785–94. KDD ’16. New
+York, NY, USA: ACM. <https://doi.org/10.1145/2939672.2939785>.
+
+</div>
+
 <div id="ref-CortezUCI">
 
 Cortez, Paulo. 2014. “UCI Machine Learning Repository.” University of
@@ -216,6 +265,22 @@ Cortez, P., and A. Silva. 2008. “Using Data Mining to Predict Secondary
 School Student Performance.” In *Proceedings of 5th Future Business
 Technology Conference*, edited by A. Brito and J. Teixeira, 1905:5–12.
 FUBUTEC. <https://doi.org/978-9077381-39-7>.
+
+</div>
+
+<div id="ref-Ke2017LightGBMAH">
+
+Ke, Guolin, Qi Meng, Thomas Finley, Taifeng Wang, Wei Chen, Weidong Ma,
+Qiwei Ye, and Tie-Yan Liu. 2017. “LightGBM: A Highly Efficient Gradient
+Boosting Decision Tree.” In *NIPS*.
+
+</div>
+
+<div id="ref-bayesopt">
+
+Nogueira, Fernando. 2017. *Bayesian Optimization: Pure Python
+Implementation of Bayesian Global Optimization with Gaussian Processes.*
+<https://github.com/fmfn/BayesianOptimization>.
 
 </div>
 
