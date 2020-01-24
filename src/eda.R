@@ -15,12 +15,35 @@ Options:
 library(tidyverse)
 library(ggcorrplot)
 library(ggridges)
-library(hrbrthemes)
+library(testthat)
 library(docopt)
 
+#' This function creates a bunch of plots (boxplots, a histogram, a correlation matrix, and a ridgeplot)
+#' for further use in the report. 
+#'
+#' @param path_data 
+#' A character string that gives the location of the data set that will be used to fit each
+#' graph. This path should be relative to the root directory of this repository.
+#' @param directory_out 
+#' A character string that provides a file path specifying where to store all of the rendered graphs.
+#' This path should be relative to the root directory of this repository.
+#' @return A character string displaying a message if the plots were successfully rendered.
+#' @export
+#'
+#' @examples
+#' main(path_data = "data/processed/train.csv", directory_out = "img")
+#' 
 main <- function(path_data, directory_out) {
   
 train_data <- read_csv(path_data)
+
+if (str_detect(path_data, ".csv") == FALSE) {
+  stop("The path to the data should be a .csv file.")
+}
+
+if (str_detect(directory_out, ".csv") == TRUE) {
+  stop("The output directory should not be a file.")
+}
 
 # Correlation Matrix
 
@@ -77,8 +100,36 @@ ggsave(ggplot(data = train_data, aes(x = G3, y = ..density..)) +
     labs(color = "Percentile"),
   filename = paste(directory_out, "/g3_hist.png", sep= ""))
 
+paste("Plots successfully stored in: ", directory_out, sep = "")
+
+}
+
+#' This function tests main for invalid file names or 
+#' invalid file paths.
+#'
+#' @return
+#'  A character string that outputs "All tests have passed." 
+#'  if all tests have passed.
+#' @export
+#'
+#' @examples tester()
+tester <- function() {
+  
+  test_that("The function accepts a file that isn't .csv", {
+    expect_error(main("data/processed", "img"))
+    expect_error(main("cool/student-por", "img"))
+  })
+  
+  test_that("The function accepts a file name as the output 
+  directory when it should only accept a file path.", {
+    expect_error(main("data/raw/student-por.csv", "data/processed/train.csv"))
+    expect_error(main("data/raw/student-por.csv", "data/processed/coolname.csv"))
+  })
+  
+  print("All tests have passed.")
+  
 }
 
 opt <- docopt::docopt(doc)
-
 main(opt$path_data, opt$directory_out)
+tester()
