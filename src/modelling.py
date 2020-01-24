@@ -6,14 +6,14 @@
 # Models used in this script are Linear Regression with Lasso, Linear Regression with Ridge, Random Forest Regressor, XGBoost Regressor and Light GBM Regressor.
 #
 # Outputs (relative path from project repo):
-# Cross-validation results  (csv_output_dir_path + "/cv_results.csv")
-# lmlasso_hyperparam        (csv_output_dir_path + "/lmlasso_hyperparam.csv")
-# lmridge_hyperparam        (csv_output_dir_path + "/lmridge_hyperparam.csv")
-# rf_hyperparam             (csv_output_dir_path + "/rf_hyperparam.csv")
-# xgb_hyperparam            (csv_output_dir_path + "/xgb_hyperparam.csv")
-# lgbm_hyperparam           (csv_output_dir_path + "/lgbm_hyperparam.csv")
-# feat_importances          (csv_output_dir_path + "/feat_importance.csv")
-# Plot of top 5 feat        (image_output_dir_path + "/ranked_features.png")
+# Cross-validation results  (csv_output_dir_path + "cv_results.csv")
+# lmlasso_hyperparam        (csv_output_dir_path + "lmlasso_hyperparam.csv")
+# lmridge_hyperparam        (csv_output_dir_path + "lmridge_hyperparam.csv")
+# rf_hyperparam             (csv_output_dir_path + "rf_hyperparam.csv")
+# xgb_hyperparam            (csv_output_dir_path + "xgb_hyperparam.csv")
+# lgbm_hyperparam           (csv_output_dir_path + "lgbm_hyperparam.csv")
+# feat_importances          (csv_output_dir_path + "feat_importance.csv")
+# Plot of top 5 feat        (image_output_dir_path + "ranked_features.png")
 ###################################################################
 '''This script will perform preprocessing on both training and test data, and create various models to predict the grades of Portuguese subject.
 It will output the best hyperparameters for each model's cross validation, and score the predictions of the different models
@@ -24,11 +24,12 @@ Usage: modelling.py --train_data_file_path=<train_data_file_path> --test_data_fi
 Options:
 --train_data_file_path=<train_data_file_path>  Path (including filename) to the training data csv file.
 --test_data_file_path=<test_data_file_path>  Path (including filename) to the test data csv file.
---csv_output_dir_path=<csv_output_dir_path>  Path (excluding any filenames) to the output csv directory. Cannot end with "/".
---image_output_dir_path=<image_output_dir_path>  Path (excluding any filenames) to the output image directory. Cannot end with "/".
+--csv_output_dir_path=<csv_output_dir_path>  Path (excluding any filenames) to the output csv directory. Must end with "/".
+--image_output_dir_path=<image_output_dir_path>  Path (excluding any filenames) to the output image directory. Must end with "/".
 '''
 
 # Typical packages
+import pytest
 from docopt import docopt
 import numpy as np
 import pandas as pd
@@ -66,10 +67,58 @@ opt = docopt(__doc__)
 
 def main(train_data_file_path, test_data_file_path, csv_output_dir_path, image_output_dir_path):
 
+    """ 
+    This function performs the preprocessing and predictive modelling, and outputs various csv files on crossvalidation scores, 
+    model hyperparameters, and plot of top 5 predictive features based on best model.
+    
+    Parameters
+    ----------
+    train_data_file_path: str
+        A string that provides a FILE path (including filename) in which the training data is stored.
+        Cannot be null, otherwise an error will be thrown.
+    
+    test_data_file_path: str
+        A str that provides a FILE path (including filename) in which the test data is stored.
+        Cannot be null, otherwise an error will be thrown.
+
+    csv_output_dir_path: str
+        A string that provides the DIRECTORY path (including "/" character at the end) to store csv outputs.
+
+    image_output_dir_path: str
+        A string that provides the DIRECTORY path (including "/" character at the end) to store image outputs.
+
+    Returns
+    ---------
+    None
+    
+    Examples
+    ---------
+    main(
+        train_data_file_path="./data/processed/train.csv",
+        test_data_file_path="./data/processed/test.csv",
+        csv_output_dir_path="./data/output/",
+        image_output_dir_path="./img/"
+    )
+
+    """
+
+    if not train_data_file_path:
+        raise Exception("Please provide a valid file path for training data.")
+    
+    if not test_data_file_path:
+        raise Exception("Please provide a valid file path for test data.")
+    
+    if csv_output_dir_path[-1] != "/":
+        raise Exception("Please include the '/' character at the end of the csv_output_dir_path")
+
+    if image_output_dir_path[-1] != "/":
+        raise Exception("Please include the '/' character at the end of the image_output_dir_path")
+
+
     # Training Data
     train_data  = pd.read_csv(train_data_file_path)
 
-    X_train = train_data.drop(["G3"], axis = 1)
+    X_train = train_data.drop(["G3", "G2", "G1"], axis = 1)
     y_train = train_data["G3"]
 
     # Identify numerical vs categorical features
@@ -385,7 +434,7 @@ def main(train_data_file_path, test_data_file_path, csv_output_dir_path, image_o
     # Test set
     test_data  = pd.read_csv(test_data_file_path)
 
-    X_test = test_data.drop(["G3"], axis = 1)
+    X_test = test_data.drop(["G3", "G2", "G1"], axis = 1)
     y_test = test_data["G3"]
 
     # Convert to dataframe with preprocessor
@@ -435,20 +484,20 @@ def main(train_data_file_path, test_data_file_path, csv_output_dir_path, image_o
     # https://github.com/nipunbatra/50-ggplot-python/blob/master/Altair/DivergingLollipop.ipynb
 
     # Lollipop bar/sticks
-    c1 = alt.Chart(feat_importance.head(5)).mark_bar(color='yellow', size = 5).encode(
+    c1 = alt.Chart(feat_importance.head(10)).mark_bar(color='pink', size = 5).encode(
         y=alt.Y('index', sort=alt.EncodingSortField(order='descending', field='Importance'), title = None),
         x=alt.X('Importance')
     )
 
     # Lollipop Heads/Circles
-    c2 = alt.Chart(feat_importance.head(5)).mark_circle(color='yellow', size=400).encode(
+    c2 = alt.Chart(feat_importance.head(10)).mark_circle(color='lightblue', size=1200).encode(
         y=alt.Y('index', sort=alt.EncodingSortField(order='descending', field='Importance')),
         x=alt.X('Importance' ), 
         text='Importance'
     )
 
     # Lollipop Text/Importance Weights
-    c3 = alt.Chart(feat_importance.head(5)).mark_text(color='black').encode(
+    c3 = alt.Chart(feat_importance.head(10)).mark_text(color='black').encode(
         y=alt.Y('index', sort=alt.EncodingSortField(order='descending', field='Importance')),
         x=alt.X('Importance' ), 
         text='Importance'
@@ -461,10 +510,37 @@ def main(train_data_file_path, test_data_file_path, csv_output_dir_path, image_o
     chart.configure(
         numberFormat="0.4f"
     ).properties(
-        title = "Top 5 Features Ranked According to Importance ("+list(test_rmse.head(1).index)[0]+")",
+        title = "Top 10 Features Ranked According to Importance ("+list(test_rmse.head(1).index)[0]+")",
         width = 800,
-        height = 200
+        height = 400
     ).save(image_output_dir_path+"/ranked_features.png")
+
+def check_train_data_file_path():
+    """
+    This function checks if an exception is raised if an empty train_data_file_path is provided to 
+    main.
+    
+    Parameters
+    ----------
+    None
+    
+    Returns
+    ----------
+    None, if the test has passed, and a Failed message if the test has not passed.
+    
+    Examples
+    ----------
+    check_train_data_file_path()
+    
+    """
+    with pytest.raises(Exception):
+        main(
+            test_data_file_path="./data/processed/test.csv",
+            csv_output_dir_path="./data/output/",
+            image_output_dir_path="./img/"
+        )
+        
+assert check_train_data_file_path() == None, "Invalid train_data_file_path of main function has failed."
 
 if __name__ == "__main__":
     main(opt["--train_data_file_path"], opt["--test_data_file_path"], opt["--csv_output_dir_path"], opt["--image_output_dir_path"])
