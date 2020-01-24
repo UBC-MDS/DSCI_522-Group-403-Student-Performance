@@ -7,10 +7,10 @@ Our selected data set summarizes Portuguese high school student’s
 academic performance in both Math and Portuguese. For this project we
 are trying to answer the question: what are the top five features that
 most strongly predict high school student’s performances in their
-Portuguese language course? In developing social intiatives to improve
+Portuguese language course? In developing social initiatives to improve
 student scores, it could be immensely useful to understand what
 attributes play a strong role in predicting performance. Without
-identifying these key factors, such intiatives would likely be less
+identifying these key factors, such initiatives would likely be less
 effective and would fail to provide a high return on the school board or
 government’s investment.
 
@@ -19,14 +19,14 @@ The data set was sourced from the UCI Machine Learning Repository
 [here](https://archive.ics.uci.edu/ml/datasets/Student+Performance), and
 the original research paper (Cortez and Silva 2008) can be found
 [here.](http://www3.dsi.uminho.pt/pcortez/student.pdf) The data was
-compiled from official school reports as well as questionaires provided
+compiled from official school reports as well as questionnaires provided
 to students. Attributes include the student grades, demographic, social
 and other school related features. Two datasets are provided regarding
 the performance in two distinct subjects: Mathematics (`mat`) and
-Portuguese language (`por`). For the purpose of this analysis, we have
-decided to focus only on the Portuguese dataset to investigate which
-student attributes are the strongest predictors of performance in that
-subject.
+Portuguese language (`por`), though these datasets do not correspond to
+the same students. For the purpose of this analysis, we have decided to
+focus only on the Portuguese data set to investigate which student
+attributes are the strongest predictors of performance in that subject.
 
 Some key highlights regarding the data set’s attributes:
 
@@ -45,7 +45,7 @@ Some key highlights regarding the data set’s attributes:
 Before building our model, we partitioned the data into a training and
 test set (split 80%:20%) and performed exploratory data analysis to
 investigate the distribution of our predictive features and explore
-whether there are any highly correlated features we might want to ommit
+whether there are any highly correlated features we might want to omit
 from our
 analysis.
 
@@ -62,7 +62,7 @@ to the grades for the 1st and 2nd school terms of that year. Though it
 will be more difficult to get accurate predictions without these
 features, it makes sense to drop them in light of our research question
 and motivations outlined above. We’re more interested in which
-attributes, other than recent acadmemic performance, will be most
+attributes, other than recent academic performance, will be most
 predictive of future academic performance.
 
 ### Variable Distributions:
@@ -73,7 +73,7 @@ Categorical & Binary Features**
 Looking at the feature distribution boxplots in Figure 2, we can see
 that some of the most noteworthy features include student’s past number
 of course failures (`failures`), parental education levels (`Medu`,
-`Fedu`), alcohol consumption on weekdays and the weekeend (`Dalc`,
+`Fedu`), alcohol consumption on weekdays and the weekend (`Dalc`,
 `Walc`), and the school they attended (`school`). Each of these appears
 to show a clear trend with respect to G3, so we would expect to see some
 of these features having strong predictive power in the machine learning
@@ -85,8 +85,7 @@ develop.
 **Figure 3 - Ridgeplot of Absences Feature**
 
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of
-`abscences` counts, indicating this may be a strong predictive feature
-as
+`absences` counts, indicating this may be a useful predictive feature as
 well.
 
 <img src="../img/g3_hist.png" title="Distribution of Response Variable" width="60%" height="60%" align="middle" />
@@ -120,30 +119,51 @@ We found that the RandomForest model performed best with a RMSE of xyz
     - We will choose K via cross-validation using ~ 30 folds because this Wisconsin Breast Cancer data set is not very large, having only 569 observations. We will use overall accuracy to choose K. 
     - A line plot of overall accuracy versus $K$ will be included as part of the final report for this project.
 
+Table of CV dsscores from each model (kable), hyperlink to the full
+hyperparameter outputs
+
 ## Ranked Features & Conclusions
 
-The top X ranked features from our Random Forest regression model were
+The top 10 ranked features from our Random Forest regression model were
 as follows:
 
-![alt tag](../img/ranked_features.png) **Figure 7 - Ranked Features**
+![alt tag](../img/ranked_features.png) **Figure 7 - Ranked Features for
+Random Forest Model**
 
-For the most part, the results are inline with our expectations
-following EDA.Given we have identified attributes that predict academic
-performance, this information could be very useful when developing
-social programs or intitatives intending to improve student’s academic
-performance. Targetting these attributes should improve the
-effectiveness of the programs and thereby provide better return on
-investment for those initiatives.
+For the most part, the results appear to be inline with our expectations
+based on the features identified during the EDA process. `failures` and
+`absences` are the clear leaders, while many of the other highly
+important features were noted during EDA. Figure 7 includes the top 10
+features to illustrate that the subsequent 5 most important features
+follow closely in terms of their importance scores.
+
+To formally address our research question, the five most predictive
+features are:
+
+1.  failures (number of past class failures)
+2.  absences (number of school absences)
+3.  age (student’s age)
+4.  Walc (weekend alcohol consumption)
+5.  school (student’s school)
+
+Given that we have identified attributes that are strongly predictive of
+academic performance, this information could now be used to develop
+social programs or initiatives intending to improve student’s academic
+performance. Targeting these specific attributes is likely to improve
+the effectiveness of such programs and thereby provide better return on
+investment.
 
 ## Reflections & Next Steps
 
-#### TODO: Not using the right regression approach? Brayden notes
+**Dropped features:**
 
 We dropped features `G1` and `G2` after our EDA with the intent of
 removing features based on recent academic performance. `Failures`,
 which ended up being our top predictor, is highly correlated with `G1`
 and `G2` and could perhaps be removed in subsequent analysis attempting
 to focus on non-academic predictive attributes.
+
+**Math data set:**
 
 For this analysis, we focused on only one of two available student
 performance data sets. We looked at student performance in Portuguese,
@@ -153,6 +173,30 @@ subjects, or whether different subjects are predicted better by
 different features. We would be curious to see if performance in Math is
 strongly predicted by the ‘going out with friends’ attribute, for
 example.
+
+**Modelling assumptions:**
+
+In our analysis, we assumed the target variable “G3” as a fully
+continuous variable and treated the overall problem as a regression.
+However, this is not actually true. Indeed, the variable can take on
+discrete values from 0-20 and values such as 1.115 or 19.333 were not
+observed.
+
+One might then think to switch to rephrasing this problem as a
+multi-class classification instead. However, there is a clear ordering
+in the target variable and in particular, the distance between the
+predicted score G3 and the actual score is important. If we were to
+treat this as a classification problem, an error of predicting a G3
+score of 5 for a true G3 of 20 would be viewed the same as an error of
+predicting a G3 score of 19 for the same student. This is also
+undesirable.
+
+In truth, our problem is neither regression or classification. Our
+problem instead is that of ordinal regression, which can be viewed as a
+middle ground. We wish to predict discrete labels while still respecting
+the relative nature of the labels themselves. Thus, a huge improvement
+to our analysis would be to switch to a better framework more suited for
+such a response.
 
 # References
 
