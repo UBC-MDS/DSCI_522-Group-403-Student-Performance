@@ -15,7 +15,6 @@ Options:
 library(tidyverse)
 library(ggcorrplot)
 library(ggridges)
-library(hrbrthemes)
 library(testthat)
 library(docopt)
 
