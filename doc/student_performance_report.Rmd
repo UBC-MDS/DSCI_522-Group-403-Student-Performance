@@ -4,6 +4,10 @@ bibliography: student_performance_refs.bib
 ---
 
 # DSCI522 Group 403 - Student Performance Report
+```{r include=FALSE}
+library(knitr)
+library(tidyverse)
+```
 
 ## Motivation & Data Set
 
@@ -40,7 +44,7 @@ Looking at the feature distribution boxplots in Figure 2, we can see that some o
 
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
-**Figure 3 - Ridgeplot of Absences Feature**
+**Figure 3 - Ridgeplot of Absences Feature **
 
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of `abscences` counts, indicating this may be a strong predictive feature as well.
 
@@ -52,25 +56,48 @@ Finally, our response variable G3 shows an approximately normal distribution, wi
 
 ## Predictive Modelling
 
-To answer the predictive question posed above, we built and compared several predictive regression models. We constructed the following models, optimizing each according to the specified hyperparameters. Model performance was evaluated using RMSE.
+To answer the predictive question posed above, we built and compared several predictive regression models. We constructed the following models, optimizing each according to the specified hyperparameters. Model performance was evaluated using root mean squared error (RMSE).
 
-**Figure 5**
+A total of 5 models were chosen using Scikit Learn [@sklearn_api], XGBoost [@Chen:2016:XST:2939672.2939785], and Light GBM [@Ke2017LightGBMAH]:  
 
-**Figure 6**
+- Linear Regression with Lasso (L1)  
+- Linear Regression with Ridge (L2)  
+- Random Forest (L1)  
+- XGBoost Regressor  
+- LightGBM Regressor   
 
-We found that the RandomForest model performed best with a RMSE of xyz (figure/table?). 
+The choice for model types stem from the feature extraction functionalities that they provide, which suit our analysis of top predictors features. Linear regression models can output the weights of each feature, while tree models can output the feature importances according to the node splitting.
 
-#### TODO: Do we need to justify model choices more? simplified version of what tiffanys done below?
-    Given that all measurements are continuous in nature, and the outcome we are trying to predict is one of two classes, one suitable and simple approach that we plan to first explore is using a k-nearest neighbours classification algorithm. 
-    
-    - With this algorithm, we will have to choose K, the number of nearest neighbours to use for prediction. 
-    - We will choose K via cross-validation using ~ 30 folds because this Wisconsin Breast Cancer data set is not very large, having only 569 observations. We will use overall accuracy to choose K. 
-    - A line plot of overall accuracy versus $K$ will be included as part of the final report for this project.
+We applied the following preprocessing techniques for the data:
+
+- Standard Scaling for numerical features
+- One-Hot-Encoding for binary/categorical features.
+
+Hyperparameters were tuned with the Bayesian Optimization package [@bayesopt] using 10 fold cross validation. For more details on the best hyperparameters for each model, please find the stored outputs in the [data outputs folder](../data/outputs/). The validation results for each model type is shown in the following:
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+cv_dat <- read_csv("../data/output/cv_results.csv")
+colnames(cv_dat) <- c("Model", "cv_rmse_score")
+
+kable(cv_dat)
+```
+
+Using the preprocessed test data, we scored all 5 of the tuned models. The test results for each tuned model type is as shown:
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+test_rmse_dat <- read_csv("../data/output/final_results.csv")
+colnames(test_rmse_dat) <- c("Model", "test_rmse_score")
+
+kable(test_rmse_dat)
+
+best_score <- test_rmse_dat %>% head(1) %>% select(test_rmse_score) %>% pull()
+```
+
+Based on the results, the RandomForest model performed best with a RMSE of `r round(best_score, 3)`.
 
 ## Ranked Features & Conclusions
 
 The top X ranked features from our Random Forest regression model were as follows:
-
 
  ![alt tag](../img/ranked_features.png)
 **Figure 7 - Ranked Features**
