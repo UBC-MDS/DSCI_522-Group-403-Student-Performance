@@ -44,7 +44,7 @@ Looking at the feature distribution boxplots in Figure 2, we can see that some o
 
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
-**Figure 3 - Ridgeplot of Absences Feature **
+**Figure 3 - Ridgeplot of Absences Feature**
 
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of `absences` counts, indicating this may be a useful predictive feature as well.
 
@@ -62,7 +62,7 @@ A total of 5 models were chosen using Scikit Learn [@sklearn_api], XGBoost [@Che
 
 - Linear Regression with Lasso (L1)  
 - Linear Regression with Ridge (L2)  
-- Random Forest (L1)  
+- Random Forest
 - XGBoost Regressor  
 - LightGBM Regressor   
 
@@ -101,7 +101,7 @@ Based on the results, the RandomForest model performed best with a RMSE of `r ro
 The top 10 ranked features from our Random Forest regression model were as follows:
 
  ![alt tag](../img/ranked_features.png)
-**Figure 7 - Ranked Features for Random Forest Model**
+**Figure 5 - Ranked Features for Random Forest Model**
 
 For the most part, the results appear to be inline with our expectations based on the features identified during the EDA process. `failures` and `absences` are the clear leaders, while many of the other highly important features were noted during EDA. Figure 7 includes the top 10 features to illustrate that the subsequent 5 most important features follow closely in terms of their importance scores. 
 
