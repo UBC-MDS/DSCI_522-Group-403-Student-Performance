@@ -1,3 +1,16 @@
+# Authors: Brayden Tang, Kenneth Foo, Brendon Campbell
+# Date: January 24, 2020
+
+"This script creates box plots of all of the predictors, a correlation matrix,
+and a plot of the estimated distribution of G3. 
+
+Usage: eda.R <path_data> <directory_out>
+
+Options:
+<path_data>       A file path that gives the location of the data set that will be used to fit each graph.
+<directory_out>   A file path specifying where to store all of the rendered graphs.
+" -> doc
+
 library(tidyverse)
 library(ggcorrplot)
 library(docopt)
@@ -44,6 +57,5 @@ ggsave(ggplot(data = train_data, aes(x = G3, y = ..density..)) +
   geom_density() +
   theme_minimal(),
   filename = paste(path_out, "/g3_hist.png", sep= ""))
-
 
 }
