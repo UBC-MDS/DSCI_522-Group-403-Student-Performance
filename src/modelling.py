@@ -12,6 +12,7 @@
 # rf_hyperparam             (csv_output_dir_path + "rf_hyperparam.csv")
 # xgb_hyperparam            (csv_output_dir_path + "xgb_hyperparam.csv")
 # lgbm_hyperparam           (csv_output_dir_path + "lgbm_hyperparam.csv")
+# test_rmse                 (csv_output_dir_path + "final_results.csv")
 # feat_importances          (csv_output_dir_path + "feat_importance.csv")
 # Plot of top 5 feat        (image_output_dir_path + "ranked_features.png")
 ###################################################################
@@ -368,11 +369,11 @@ def main(train_data_file_path, test_data_file_path, csv_output_dir_path, image_o
     lgbm_hyperparam_series = pd.Series(lgbm_hyperparam)
 
     # Output model params to csv
-    lmlasso_hyperparam_series.to_csv(csv_output_dir_path+"/lmlasso_hyperparam.csv", header = False)
-    lmridge_hyperparam_series.to_csv(csv_output_dir_path+"/lmridge_hyperparam.csv", header = False)
-    rf_hyperparam_series.to_csv(csv_output_dir_path+"/rf_hyperparam.csv", header = False)
-    xgb_hyperparam_series.to_csv(csv_output_dir_path+"/xgb_hyperparam.csv", header = False)
-    lgbm_hyperparam_series.to_csv(csv_output_dir_path+"/lgbm_hyperparam.csv", header = False)
+    lmlasso_hyperparam_series.to_csv(csv_output_dir_path+"lmlasso_hyperparam.csv", header = False)
+    lmridge_hyperparam_series.to_csv(csv_output_dir_path+"lmridge_hyperparam.csv", header = False)
+    rf_hyperparam_series.to_csv(csv_output_dir_path+"rf_hyperparam.csv", header = False)
+    xgb_hyperparam_series.to_csv(csv_output_dir_path+"xgb_hyperparam.csv", header = False)
+    lgbm_hyperparam_series.to_csv(csv_output_dir_path+"lgbm_hyperparam.csv", header = False)
 
     # # Optional: Read in stored hyperparams. To be used when restart from offline
     # # Read in stored hyperparams.
@@ -455,6 +456,9 @@ def main(train_data_file_path, test_data_file_path, csv_output_dir_path, image_o
     test_rmse = pd.DataFrame(test_rmse, index= models, columns = ["test_rmse"])
     test_rmse = test_rmse.sort_values(by="test_rmse", ascending = True)
 
+    # Output to csv
+    test_rmse.to_csv(csv_output_dir_path+"final_results.csv")
+
     # Create dictionary of all models
     models_dict = dict()
     models_dict["lm_lasso"] = best_lasso
@@ -478,7 +482,7 @@ def main(train_data_file_path, test_data_file_path, csv_output_dir_path, image_o
     feat_importance = feat_importance.sort_values(by = "Importance", ascending = False).reset_index()
 
     # Output feat_importance model
-    feat_importance.to_csv(csv_output_dir_path+"/feat_importance.csv")
+    feat_importance.to_csv(csv_output_dir_path+"feat_importance.csv")
 
     # Altair Plot of Lollipop Chart
     # https://github.com/nipunbatra/50-ggplot-python/blob/master/Altair/DivergingLollipop.ipynb
@@ -513,7 +517,7 @@ def main(train_data_file_path, test_data_file_path, csv_output_dir_path, image_o
         title = "Top 10 Features Ranked According to Importance ("+list(test_rmse.head(1).index)[0]+")",
         width = 800,
         height = 400
-    ).save(image_output_dir_path+"/ranked_features.png")
+    ).save(image_output_dir_path+"ranked_features.png")
 
 def check_train_data_file_path():
     """
