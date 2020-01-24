@@ -6,7 +6,7 @@ and a plot of the estimated distribution of G3. This script assumes that it will
 be run in the root directory of the repository.
 
 Usage: eda.R <path_data> <directory_out>
-
+  
 Options:
 <path_data>       A file path that gives the location of the data set that will be used to fit each graph.
 <directory_out>   A file path specifying where to store all of the rendered graphs.
@@ -53,7 +53,7 @@ ggsave(
   ggcorrplot::ggcorrplot(
     correlation_mat, 
     show.diag = TRUE, 
-    title = "Correlation Plot of All Features (Pearon's R)"), 
+    title = "Correlation Plot of All Features (Pearson's R)"), 
   filename = paste(directory_out, "/correlation_matrix.png", sep = ""))
 
 plotting_data <- train_data %>%
