@@ -1,8 +1,7 @@
 # Author(s): Kenneth Foo, Brayden Tang, Brendon Campbell
 # Date: January 22, 2020 
 
-"This script splits the raw data into train and test sets, and then
-drops the highly correlated features G1 and G2. This script
+"This script splits the raw data into train and test sets, This script
 assumes that it is being run from the root directory of the repository.
 
 Usage: wrangling.R <file_raw> <path_out>
@@ -55,11 +54,9 @@ df <- read_delim(file_raw, delim = ";")
 set.seed(200350623)
 split <- caret::createDataPartition(y = df$G3, times = 1, p = 0.8)
 
-train_df <- df[split[[1]], ] %>% 
-  select(-G2, -G1)
+train_df <- df[split[[1]], ] 
 
-test_df <- df[-split[[1]], ] %>%
-  select(-G2, -G1)
+test_df <- df[-split[[1]], ] 
 
 write_csv(train_df, paste(path_processed, "/train.csv", sep = ""))
 write_csv(test_df,  paste(path_processed, "/test.csv", sep = ""))
