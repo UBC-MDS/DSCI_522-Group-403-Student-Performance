@@ -120,20 +120,39 @@ We found that the RandomForest model performed best with a RMSE of xyz
     - We will choose K via cross-validation using ~ 30 folds because this Wisconsin Breast Cancer data set is not very large, having only 569 observations. We will use overall accuracy to choose K. 
     - A line plot of overall accuracy versus $K$ will be included as part of the final report for this project.
 
+Table of CV dsscores from each model (kable), hyperlink to the full
+hyperparameter outputs
+
 ## Ranked Features & Conclusions
 
-The top X ranked features from our Random Forest regression model were
+The top 10 ranked features from our Random Forest regression model were
 as follows:
 
-![alt tag](../img/ranked_features.png) **Figure 7 - Ranked Features**
+![alt tag](../img/ranked_features.png) **Figure 7 - Ranked Features for
+Random Forest Model**
 
-For the most part, the results are inline with our expectations
-following EDA.Given we have identified attributes that predict academic
-performance, this information could be very useful when developing
+For the most part, the results appear to be inline with our expectations
+based on the features identified during the EDA process. `failures` and
+`absences` are the clear leaders, while many of the other highly
+important features were noted during EDA. Figure 7 includes the top 10
+features to illustrate that the subsequent 5 most important features
+follow closely in terms of their importance scores.
+
+To formally address our research question, the five most predictive
+features are:
+
+1.  failures (number of past class failures)
+2.  absences (number of school absences)
+3.  age (student’s age)
+4.  Walc (weekend alcohol consumption)
+5.  school (student’s school)
+
+Given that we have identified attributes that are strongly predictive of
+academic performance, this information could now be used to develop
 social programs or intitatives intending to improve student’s academic
-performance. Targetting these attributes should improve the
-effectiveness of the programs and thereby provide better return on
-investment for those initiatives.
+performance. Targetting these specific attributes is likely to improve
+the effectiveness of such programs and thereby provide better return on
+investment.
 
 ## Reflections & Next Steps
 

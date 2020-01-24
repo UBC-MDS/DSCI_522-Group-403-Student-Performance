@@ -7,9 +7,9 @@ bibliography: student_performance_refs.bib
 
 ## Motivation & Data Set
 
-Our selected data set summarizes Portuguese high school student's academic performance in both Math and Portuguese. For this project we are trying to answer the question: what are the top five features that most strongly predict high school student's performances in their Portuguese language course? In developing social intiatives to improve student scores, it could be immensely useful to understand what attributes play a strong role in predicting performance. Without identifying these key factors, such intiatives would likely be less effective and would fail to provide a high return on the school board or government's investment.
+Our selected data set summarizes Portuguese high school student's academic performance in both Math and Portuguese. For this project we are trying to answer the question: what are the top five features that most strongly predict high school student's performances in their Portuguese language course? In developing social initiatives to improve student scores, it could be immensely useful to understand what attributes play a strong role in predicting performance. Without identifying these key factors, such initiatives would likely be less effective and would fail to provide a high return on the school board or government's investment.
 
-The data set was sourced from the UCI Machine Learning Repository [@CortezUCI] which can be found [here](https://archive.ics.uci.edu/ml/datasets/Student+Performance), and the original research paper [@Cortezetal] can be found [here.](http://www3.dsi.uminho.pt/pcortez/student.pdf) The data was compiled from official school reports as well as questionaires provided to students. Attributes include the student grades, demographic, social and other school related features. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (`mat`) and Portuguese language (`por`). For the purpose of this analysis, we have decided to focus only on the Portuguese dataset to investigate which student attributes are the strongest predictors of performance in that subject.
+The data set was sourced from the UCI Machine Learning Repository [@CortezUCI] which can be found [here](https://archive.ics.uci.edu/ml/datasets/Student+Performance), and the original research paper [@Cortezetal] can be found [here.](http://www3.dsi.uminho.pt/pcortez/student.pdf) The data was compiled from official school reports as well as questionnaires provided to students. Attributes include the student grades, demographic, social and other school related features. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (`mat`) and Portuguese language (`por`). For the purpose of this analysis, we have decided to focus only on the Portuguese data set to investigate which student attributes are the strongest predictors of performance in that subject.
 
 Some key highlights regarding the data set's attributes:
 
@@ -21,7 +21,7 @@ Some key highlights regarding the data set's attributes:
 
 ## Exploratory Data Analysis
 
-Before building our model, we partitioned the data into a training and test set (split 80%:20%) and performed exploratory data analysis to investigate the distribution of our predictive features and explore whether there are any highly correlated features we might want to ommit from our analysis.
+Before building our model, we partitioned the data into a training and test set (split 80%:20%) and performed exploratory data analysis to investigate the distribution of our predictive features and explore whether there are any highly correlated features we might want to omit from our analysis.
 
 ### Feature Correlations:
 
@@ -29,14 +29,14 @@ Before building our model, we partitioned the data into a training and test set 
 
 **Figure 1 - Feature Correlations**
 
-As we can see from Figure 1, our target attribute `G3` has a strong correlation with attributes `G2` and `G1`. This occurs because `G3` is the grade issued at the end of the year, while `G1` and `G2` correspond to the grades for the 1st and 2nd school terms of that year. Though it will be more difficult to get accurate predictions without these features, it makes sense to drop them in light of our research question and motivations outlined above. We're more interested in which attributes, other than recent acadmemic performance, will be most predictive of future academic performance.
+As we can see from Figure 1, our target attribute `G3` has a strong correlation with attributes `G2` and `G1`. This occurs because `G3` is the grade issued at the end of the year, while `G1` and `G2` correspond to the grades for the 1st and 2nd school terms of that year. Though it will be more difficult to get accurate predictions without these features, it makes sense to drop them in light of our research question and motivations outlined above. We're more interested in which attributes, other than recent academic performance, will be most predictive of future academic performance.
 
 ### Variable Distributions:
 
  ![alt tag](../img/box-plots.png)
 **Figure 2 - Distribution Boxplots for Categorical & Binary Features**
 
-Looking at the feature distribution boxplots in Figure 2, we can see that some of the most noteworthy features include student's past number of course failures (`failures`), parental education levels (`Medu`, `Fedu`), alcohol consumption on weekdays and the weekeend (`Dalc`, `Walc`), and the school they attended (`school`). Each of these appears to show a clear trend with respect to G3, so we would expect to see some of these features having strong predictive power in the machine learning models we develop. 
+Looking at the feature distribution boxplots in Figure 2, we can see that some of the most noteworthy features include student's past number of course failures (`failures`), parental education levels (`Medu`, `Fedu`), alcohol consumption on weekdays and the weekend (`Dalc`, `Walc`), and the school they attended (`school`). Each of these appears to show a clear trend with respect to G3, so we would expect to see some of these features having strong predictive power in the machine learning models we develop. 
 
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
@@ -66,16 +66,27 @@ We found that the RandomForest model performed best with a RMSE of xyz (figure/t
     - With this algorithm, we will have to choose K, the number of nearest neighbours to use for prediction. 
     - We will choose K via cross-validation using ~ 30 folds because this Wisconsin Breast Cancer data set is not very large, having only 569 observations. We will use overall accuracy to choose K. 
     - A line plot of overall accuracy versus $K$ will be included as part of the final report for this project.
+Table of CV dsscores from each model (kable), hyperlink to the full hyperparameter outputs
+
 
 ## Ranked Features & Conclusions
 
-The top X ranked features from our Random Forest regression model were as follows:
-
+The top 10 ranked features from our Random Forest regression model were as follows:
 
  ![alt tag](../img/ranked_features.png)
-**Figure 7 - Ranked Features**
+**Figure 7 - Ranked Features for Random Forest Model**
 
-For the most part, the results are inline with our expectations following EDA.Given we have identified attributes that predict academic performance, this information could be very useful when developing social programs or intitatives intending to improve student's academic performance. Targetting these attributes should improve the effectiveness of the programs and thereby provide better return on investment for those initiatives. 
+For the most part, the results appear to be inline with our expectations based on the features identified during the EDA process. `failures` and `absences` are the clear leaders, while many of the other highly important features were noted during EDA. Figure 7 includes the top 10 features to illustrate that the subsequent 5 most important features follow closely in terms of their importance scores. 
+
+To formally address our research question, the five most predictive features are:
+
+1. failures (number of past class failures)
+2. absences (number of school absences)
+3. age (student's age)
+4. Walc (weekend alcohol consumption)
+5. school (student's school)
+
+Given that we have identified attributes that are strongly predictive of academic performance, this information could now be used to develop social programs or initiatives intending to improve student's academic performance. Targeting these specific attributes is likely to improve the effectiveness of such programs and thereby provide better return on investment.
 
 ## Reflections & Next Steps
 
