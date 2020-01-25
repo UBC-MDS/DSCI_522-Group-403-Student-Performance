@@ -44,8 +44,12 @@ To replicate the analysis, clone this GitHub repository, install the
 commands at the command line/terminal from the root directory of this
 project:
 
-    python src/download_data.py --out_type=feather --url=http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data --out_file=data/raw/wdbc.feather
-    Rscript -e "rmarkdown::render('src/breast_cancer_eda.Rmd')"
+    python src/data-download.py https://archive.ics.uci.edu/ml/machine-learning-databases/00320/student.zip --file_path=data/raw 
+    Rscript src/wrangling.R data/raw/student-por.csv data/processed
+    Rscript src/eda.R data/processed/train.csv img
+    
+    
+    Rscript -e "rmarkdown::render('src/breast_cancer_eda.Rmd')" 
 
 ## Dependencies
 
