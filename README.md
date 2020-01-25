@@ -1,57 +1,221 @@
-# Group 403: High School Student's Performance Predictors
-Investigating the predictors of Portugal's high school students' subject grades in Mathematics and Portuguese.
+
+# DSCI522 Group 403 - Student Performance Predictors
+
+Investigating the predictors of Portuguese high school student
+performance
 
 This project is proudly brought to you by:
-- [Brendon Campbell](https://github.com/brendoncampbell)
-- [Brayden Tang](https://github.com/braydentang1)
-- [Kenneth Foo](https://github.com/kfoofw)
 
-## Milestone 1 Proposal
+  - [Brayden Tang](https://github.com/braydentang1)
+  - [Kenneth Foo](https://github.com/kfoofw)
+  - [Brendon Campbell](https://github.com/brendoncampbell)
 
-### Section 1: Selected Data Set
+## Introduction
 
-Our selected data set summarizes student's achievements in secondary education for two Portuguese schools. The data was compiled from official school reports as well as questionaires provided to students. Attributes include the student grades, demographic, social and other school related features. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (`mat`) and Portuguese language (`por`). 
+For this project we are trying to answer the question: what are the top
+five features that most strongly predict high school student’s
+performances in their Portuguese language course? To do so we are
+working with a UCI Machine Learning Repository (Cortez 2014) data set
+which can be found
+[here](https://archive.ics.uci.edu/ml/datasets/Student+Performance),
+which includes student grades for two subjects (Math and Portuguese),
+demographic, social and other school related features.
 
-Both datasets can be summarised by the following highlights:
-- The key feature of interest is `G3` which represents the final subject grade score at the end of the academic year. The score ranges from 0 to 20. 
-- Multi-categorical attributes such as family size (`famsize`), parent's education (`Fedu`/`Medu`) or weekly study time (`studytime`)
-- Binary attributes such as home internet access (`internet`) or family educational support (`famsup`)
-- Count attributes such as number of days of absence (`absences`) or student's age (`age`)
+We conduct exploratory data analysis, fit and tune several predictive
+models, compare their performance, then report and comment on the most
+predictive features from the best model. Our final report can be found
+[here.](doc/student_performance_report.md)
 
-For additional information, refer to the following:
-- The data set's [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Student+Performance) summary page.
-- [P. Cortez](http://www3.dsi.uminho.pt/pcortez/Home.html) and A. Silva. Using Data Mining to Predict Secondary School Student Performance. In A. Brito and J. Teixeira Eds., Proceedings of 5th FUture BUsiness TEChnology Conference (FUBUTEC 2008) pp. 5-12, Porto, Portugal, April, 2008, EUROSIS, ISBN 978-9077381-39-7. 
-    - The original research [paper](http://www3.dsi.uminho.pt/pcortez/student.pdf)
+## Usage
 
-### Section 2: Research Question
+To replicate the analysis, clone this GitHub repository, install the
+[dependencies](#dependencies) listed below, and run the following
+commands at the command line/terminal from the root directory of this
+project:
 
-__Main predictive question:__ 
+    python src/download_data.py --out_type=feather --url=http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data --out_file=data/raw/wdbc.feather
+    Rscript -e "rmarkdown::render('src/breast_cancer_eda.Rmd')"
 
-For both subjects in Math and Portuguese, what are the top five features that most strongly predict high school student's performances (`G3 Score`)?
+## Dependencies
 
-__Sub questions:__ 
- - Which machine learning model type (RandomForest, Linear Regression, XGBoost, etc) is able to predict most accurately for both subjects?
- - For the best ML model type, which features are the top 5 strongest predictors for each subject?
- - Additional insight: Are there common top predictors for the grade predictions of Math and Portuguese?
+  - Python 3.7.3 (Van Rossum and Drake 2009) and Python packages:
+      - docopt==0.6.2 (Keleshev 2014)
+      - pytest==5.3.4 (Krekel and team 2015)
+      - bayesian-optimization==1.01 (Nogueira 2017)
+      - altair==3.2.0 (VanderPlas et al. 2018)
+      - pandas==0.25.3 (McKinney and others 2010)
+      - scikit-learn==0.22.1 (Buitinck et al. 2013)
+      - numpy==1.17.4 (Oliphant 2006)
+      - xgboost==0.90 (Chen and Guestrin 2016)
+      - lightgbm==2.3.0 (Ke et al. 2017)
+  - R version 3.6.1 (R Core Team 2019) and R packages:
+      - docopt==0.6.1 (de Jonge 2018)
+      - knitr==1.26 (Xie 2014)
+      - tidyverse==1.2.1 (Wickham 2017)
+      - caret==6.0-85 (Kuhn 2020)
+      - ggridges==0.5.2 (Wilke 2020)
+      - ggcorrplot==0.1.3 (Kassambara 2019)
+      - testthat==2.2.1 (Wickham 2011)
 
-### Section 3: Analysis Plan of Action
+## License
 
-<u>Project Steps:</u>  
-Our research direction is to determine the top predictors for grade prediction of both subjects. The project will comprise of the following:
-- __Data Split:__ Split both (Math and Portugese) datasets into two training and test sets (80% to 20% ratio). 
-- __Models:__ Select ML model types with intepretable feature extraction.
-- __EDA:__ For each training dataset, perform visual analysis with focus on exploring on highly correlated attributes.
-- __Training:__ Perform cross-validation model training for different ML models using training datasets.
-- __Testing:__ Perform testing for each ML model type with optimised hyper parameters. Obtain the ML model type that has the best average scoring for grade prediction of both subjects.
-- __Analysis:__ For the best ML Model type, extract out the top 5 features from both trained models (Math and Portuguese). The scoring of feature importance may be different for different ML model types and packages. The envisioned deliverable for this analysis is a visual plot of the top 5 predictors for subject grades and compare them side by side. Their corresponding importance can be illustrated with a lollipop chart type.
+The Student Performance Predictors materials here are licensed under the
+Creative Commons Attribution 2.5 Canada License (CC BY 2.5 CA). If
+re-using/re-mixing please provide attribution and link to this webpage.
 
-<u>EDA:</u>  
-An initial general heatmap of correlation strength between attributes will be used to identify relevant features for prediction of `g3`. Thereafter,  boxplots will be used to show the relationship across categorical/binary attributes with respect to the grades, and scatter plots will be used for count data attributes. Visualising the distributions will also help us spot any outliers in our dataset. As mentioned, EDA will only be done for the training dataset. 
+# References
 
-Visual plots will be done with `Altair` and `Pandas Profiling`, and supplemented with summary statistics. All these are located in this [EDA script](./src/EDA.ipynb). Please note that to run our EDA Notebook, ensure that you have `Pandas Profiling` version 2.4.0 or later.
+<div id="refs" class="references">
 
-For a hands-on trial of our `Pandas Profiling`, please use this [Binder Link](https://mybinder.org/v2/gh/UBC-MDS/DSCI_522-Group-403-Student-Performance/bb8c88b74124c12bc4f029917791a4c0b2961792):  
-- Link should direct you to an online Binder version of our project repo. 
-- Thereafter, locate the "EDA.ipynb" under the main folder "src". 
-- Note: Before running the notebook, please comment out the `alt.renderers.enable('notebook')` [last line] in the 1st cell.
-- Run the relevant cells to view the `pandas profiling` output.
+<div id="ref-sklearn_api">
+
+Buitinck, Lars, Gilles Louppe, Mathieu Blondel, Fabian Pedregosa,
+Andreas Mueller, Olivier Grisel, Vlad Niculae, et al. 2013. “API Design
+for Machine Learning Software: Experiences from the Scikit-Learn
+Project.” In *ECML Pkdd Workshop: Languages for Data Mining and Machine
+Learning*, 108–22.
+
+</div>
+
+<div id="ref-Chen:2016:XST:2939672.2939785">
+
+Chen, Tianqi, and Carlos Guestrin. 2016. “XGBoost: A Scalable Tree
+Boosting System.” In *Proceedings of the 22nd Acm Sigkdd International
+Conference on Knowledge Discovery and Data Mining*, 785–94. KDD ’16. New
+York, NY, USA: ACM. <https://doi.org/10.1145/2939672.2939785>.
+
+</div>
+
+<div id="ref-CortezUCI">
+
+Cortez, Paulo. 2014. “UCI Machine Learning Repository.” University of
+California, Irvine, School of Information; Computer Sciences.
+<http://archive.ics.uci.edu/ml>.
+
+</div>
+
+<div id="ref-docopt">
+
+de Jonge, Edwin. 2018. *Docopt: Command-Line Interface Specification
+Language*. <https://CRAN.R-project.org/package=docopt>.
+
+</div>
+
+<div id="ref-ggcorrplot">
+
+Kassambara, Alboukadel. 2019. *Ggcorrplot: Visualization of a
+Correlation Matrix Using ’Ggplot2’*.
+<https://CRAN.R-project.org/package=ggcorrplot>.
+
+</div>
+
+<div id="ref-Ke2017LightGBMAH">
+
+Ke, Guolin, Qi Meng, Thomas Finley, Taifeng Wang, Wei Chen, Weidong Ma,
+Qiwei Ye, and Tie-Yan Liu. 2017. “LightGBM: A Highly Efficient Gradient
+Boosting Decision Tree.” In *NIPS*.
+
+</div>
+
+<div id="ref-docoptpython">
+
+Keleshev, Vladimir. 2014. *Docopt: Command-Line Interface Description
+Language*. <https://github.com/docopt/docopt>.
+
+</div>
+
+<div id="ref-pytest">
+
+Krekel, Holger, and pytest-dev team. 2015. *A Mature Full-Featured
+Python Testing Tool That Helps You Write Better Programs*.
+<https://github.com/pytest-dev/pytest>.
+
+</div>
+
+<div id="ref-caret">
+
+Kuhn, Max. 2020. *Caret: Classification and Regression Training*.
+<https://CRAN.R-project.org/package=caret>.
+
+</div>
+
+<div id="ref-mckinney2010data">
+
+McKinney, Wes, and others. 2010. “Data Structures for Statistical
+Computing in Python.” In *Proceedings of the 9th Python in Science
+Conference*, 445:51–56. Austin, TX.
+
+</div>
+
+<div id="ref-bayesopt">
+
+Nogueira, Fernando. 2017. *Bayesian Optimization: Pure Python
+Implementation of Bayesian Global Optimization with Gaussian Processes.*
+<https://github.com/fmfn/BayesianOptimization>.
+
+</div>
+
+<div id="ref-oliphant2006guide">
+
+Oliphant, Travis E. 2006. *A Guide to Numpy*. Vol. 1. Trelgol Publishing
+USA.
+
+</div>
+
+<div id="ref-R">
+
+R Core Team. 2019. *R: A Language and Environment for Statistical
+Computing*. Vienna, Austria: R Foundation for Statistical Computing.
+<https://www.R-project.org/>.
+
+</div>
+
+<div id="ref-Altair2018">
+
+VanderPlas, Jacob, Brian Granger, Jeffrey Heer, Dominik Moritz, Kanit
+Wongsuphasawat, Arvind Satyanarayan, Eitan Lees, Ilia Timofeev, Ben
+Welsh, and Scott Sievert. 2018. “Altair: Interactive Statistical
+Visualizations for Python.” *Journal of Open Source Software*, December.
+The Open Journal. <https://doi.org/10.21105/joss.01057>.
+
+</div>
+
+<div id="ref-Python">
+
+Van Rossum, Guido, and Fred L. Drake. 2009. *Python 3 Reference Manual*.
+Scotts Valley, CA: CreateSpace.
+
+</div>
+
+<div id="ref-tidyverse">
+
+Wickham, H. 2017. *Tidyverse: Easily Install and Load the ’Tidyverse’*.
+<https://CRAN.R-project.org/package=tidyverse>.
+
+</div>
+
+<div id="ref-testthat">
+
+Wickham, Hadley. 2011. “Testthat: Get Started with Testing.” *The R
+Journal* 3: 5–10.
+<https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf>.
+
+</div>
+
+<div id="ref-ggridges">
+
+Wilke, Claus O. 2020. *Ggridges: Ridgeline Plots in ’Ggplot2’*.
+<https://CRAN.R-project.org/package=ggridges>.
+
+</div>
+
+<div id="ref-knitr">
+
+Xie, Yihui. 2014. “Knitr: A Comprehensive Tool for Reproducible Research
+in R.” In *Implementing Reproducible Computational Research*, edited by
+Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman;
+Hall/CRC. <http://www.crcpress.com/product/isbn/9781466561595>.
+
+</div>
+
+</div>

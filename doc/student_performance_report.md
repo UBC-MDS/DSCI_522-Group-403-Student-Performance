@@ -1,5 +1,14 @@
 
-# DSCI522 Group 403 - Student Performance Report
+# DSCI522 Group 403 - Student Performance Predictors Report
+
+Investigating the predictors of Portuguese high school student
+performance
+
+This project is proudly brought to you by:
+
+  - [Brayden Tang](https://github.com/braydentang1)
+  - [Kenneth Foo](https://github.com/kfoofw)
+  - [Brendon Campbell](https://github.com/brendoncampbell)
 
 ## Motivation & Data Set
 
@@ -51,9 +60,13 @@ analysis.
 
 ### Feature Correlations:
 
+<center>
+
 <img src="../img/correlation_matrix.png" title="Feature Correlations" width="70%" height="70%" align="middle" />
 
 **Figure 1 - Feature Correlations**
+
+</center>
 
 As we can see from Figure 1, our target attribute `G3` has a strong
 correlation with attributes `G2` and `G1`. This occurs because `G3` is
@@ -67,8 +80,12 @@ predictive of future academic performance.
 
 ### Variable Distributions:
 
+<center>
+
 ![alt tag](../img/box-plots.png) **Figure 2 - Distribution Boxplots for
 Categorical & Binary Features**
+
+</center>
 
 Looking at the feature distribution boxplots in Figure 2, we can see
 that some of the most noteworthy features include student’s past number
@@ -80,17 +97,25 @@ of these features having strong predictive power in the machine learning
 models we
 develop.
 
+<center>
+
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
-**Figure 3 - Ridgeplot of Absences Feature **
+**Figure 3 - Ridgeplot of Absences Feature**
+
+</center>
 
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of
 `absences` counts, indicating this may be a useful predictive feature as
 well.
 
+<center>
+
 <img src="../img/g3_hist.png" title="Distribution of Response Variable" width="60%" height="60%" align="middle" />
 
 **Figure 4 - Distribution of Response Variable, G3**
+
+</center>
 
 Finally, our response variable G3 shows an approximately normal
 distribution, with a mean of 11.87 and a median of 12 out of 20. There
@@ -109,7 +134,7 @@ A total of 5 models were chosen using Scikit Learn (Buitinck et al.
 
   - Linear Regression with Lasso (L1)  
   - Linear Regression with Ridge (L2)  
-  - Random Forest (L1)  
+  - Random Forest
   - XGBoost Regressor  
   - LightGBM Regressor
 
@@ -157,8 +182,13 @@ of 2.417.
 The top 10 ranked features from our Random Forest regression model were
 as follows:
 
-![alt tag](../img/ranked_features.png) **Figure 7 - Ranked Features for
-Random Forest Model**
+<center>
+
+![alt tag](../img/ranked_features.png)
+
+**Figure 5 - Ranked Features for Random Forest Model**
+
+</center>
 
 For the most part, the results appear to be inline with our expectations
 based on the features identified during the EDA process. `failures` and
