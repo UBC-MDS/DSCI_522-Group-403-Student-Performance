@@ -20,9 +20,13 @@ This project is proudly brought to you by:
 
 ## Motivation & Data Set
 
-Our selected data set summarizes Portuguese high school student's academic performance in both Math and Portuguese. For this project we are trying to answer the question: what are the top five features that most strongly predict high school student's performances in their Portuguese language course? In developing social initiatives to improve student scores, it could be immensely useful to understand what attributes play a strong role in predicting performance. Without identifying these key factors, such initiatives would likely be less effective and would fail to provide a high return on the school board or government's investment.
+Our selected data set summarizes Portuguese high school student's academic performance in both Math and Portuguese. For this project we are trying to answer the question: __what are the top five features that most strongly predict high school student's performances in their Portuguese language course?__ 
 
-The data set was sourced from the UCI Machine Learning Repository [@CortezUCI] which can be found [here](https://archive.ics.uci.edu/ml/datasets/Student+Performance), and the original research paper [@Cortezetal] can be found [here.](http://www3.dsi.uminho.pt/pcortez/student.pdf) The data was compiled from official school reports as well as questionnaires provided to students. Attributes include the student grades, demographic, social and other school related features. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (`mat`) and Portuguese language (`por`), though these datasets do not correspond to the same students. For the purpose of this analysis, we have decided to focus only on the Portuguese data set to investigate which student attributes are the strongest predictors of performance in that subject.
+In developing social initiatives to improve student scores, it could be immensely useful to understand what attributes play a strong role in predicting performance. Without identifying these key factors, such initiatives would likely be less effective and would fail to provide a high return on the school board or government's investment.
+
+The data set was sourced from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Student+Performance) [@CortezUCI], which was part of an [original research paper](http://www3.dsi.uminho.pt/pcortez/student.pdf) [@Cortezetal]. The data was compiled from official school reports as well as questionnaires provided to students. Attributes of the datasets include the student grades, demographic, social and other school related features. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (`mat`) and Portuguese language (`por`), though these datasets do not correspond to the same students. 
+
+For the purpose of this analysis, we are focusing only on the __Portuguese__ data set to investigate which student attributes are the strongest predictors of performance in that subject.
 
 Some key highlights regarding the data set's attributes:
 
@@ -34,7 +38,7 @@ Some key highlights regarding the data set's attributes:
 
 ## Exploratory Data Analysis
 
-Before building our model, we partitioned the data into a training and test set (split 80%:20%) and performed exploratory data analysis to investigate the distribution of our predictive features and explore whether there are any highly correlated features we might want to omit from our analysis.
+Before building our model, we partitioned the data into a training and test set (split 80%:20%) and performed exploratory data analysis (EDA) to investigate the distribution of our predictive features. The EDA was initiated by determining if there are any highly correlated features that we might want to omit from our analysis.
 
 ### Feature Correlations:
 
@@ -44,7 +48,7 @@ Before building our model, we partitioned the data into a training and test set 
 **Figure 1 - Feature Correlations**
 </center>
 
-As we can see from Figure 1, our target attribute `G3` has a strong correlation with attributes `G2` and `G1`. This occurs because `G3` is the grade issued at the end of the year, while `G1` and `G2` correspond to the grades for the 1st and 2nd school terms of that year. Though it will be more difficult to get accurate predictions without these features, it makes sense to drop them in light of our research question and motivations outlined above. We're more interested in which attributes, other than recent academic performance, will be most predictive of future academic performance.
+As seen from Figure 1, our target attribute `G3` has a strong correlation with attributes `G2` and `G1`. This occurs because `G3` is the grade issued at the end of the year, while `G1` and `G2` correspond to the grades for the 1st and 2nd school terms of that year. We are more interested in which attributes, other than recent academic performance, that will be most predictive of academic performance. Though it will be more difficult to get accurate predictions without these features, __both `G1` and `G2` features will be omitted__ in light of our research question and motivations outlined above. 
 
 ### Variable Distributions:
 
@@ -53,7 +57,7 @@ As we can see from Figure 1, our target attribute `G3` has a strong correlation 
 **Figure 2 - Distribution Boxplots for Categorical & Binary Features**
 </center>
 
-Looking at the feature distribution boxplots in Figure 2, we can see that some of the most noteworthy features include student's past number of course failures (`failures`), parental education levels (`Medu`, `Fedu`), alcohol consumption on weekdays and the weekend (`Dalc`, `Walc`), and the school they attended (`school`). Each of these appears to show a clear trend with respect to G3, so we would expect to see some of these features having strong predictive power in the machine learning models we develop. 
+Looking at the feature distribution boxplots in Figure 2, we can see that some of the most noteworthy features include student's past number of course failures (`failures`), parental education levels (`Medu`, `Fedu`), alcohol consumption on weekdays and the weekend (`Dalc`, `Walc`), and the school they attended (`school`). Each of these appears to show a clear trend with respect to G3, so we would expect some of these features having strong predictive power in the machine learning models we develop. 
 
 <center>
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
@@ -90,28 +94,27 @@ We applied the following preprocessing techniques for the data:
 - Standard Scaling for numerical features
 - One-Hot-Encoding for binary/categorical features.
 
-Hyperparameters were tuned with the Bayesian Optimization package [@bayesopt] using 10 fold cross validation. For more details on the best hyperparameters for each model, please find the stored outputs in the [data outputs folder](../data/outputs/). The validation results for each model type is shown in the following:
+Hyperparameters were tuned with the Bayesian Optimization package [@bayesopt] using 10 fold cross validation. For more details on the best hyperparameters for each model, please find the stored outputs in the [data outputs folder](../data/outputs/). The validation results for each model type are shown in the following:
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 cv_dat <- read_csv("../data/output/cv_results.csv")
 colnames(cv_dat) <- c("Model", "cv_rmse_score")
 
-kable(cv_dat)
+kable(cv_dat, align ="c")
 ```
 
-Using the preprocessed test data, we scored all 5 of the tuned models. The test results for each tuned model type is as shown:
+Using the preprocessed test data, we scored all five tuned models. The test results for each tuned model type are as shown:
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 test_rmse_dat <- read_csv("../data/output/final_results.csv")
 colnames(test_rmse_dat) <- c("Model", "test_rmse_score")
 
-kable(test_rmse_dat)
+kable(test_rmse_dat, align = "c")
 
 best_score <- test_rmse_dat %>% head(1) %>% select(test_rmse_score) %>% pull()
 ```
 
 Based on the results, the RandomForest model performed best with a RMSE of `r round(best_score, 3)`.
-
 
 ## Ranked Features & Conclusions
 
@@ -123,7 +126,7 @@ The top 10 ranked features from our Random Forest regression model were as follo
 **Figure 5 - Ranked Features for Random Forest Model**
  </center>
 
-For the most part, the results appear to be inline with our expectations based on the features identified during the EDA process. `failures` and `absences` are the clear leaders, while many of the other highly important features were noted during EDA. Figure 7 includes the top 10 features to illustrate that the subsequent 5 most important features follow closely in terms of their importance scores. 
+For the most part, the results appear to be inline with our expectations based on the features identified during the EDA process. `failures` and `absences` are the clear leaders, while many of the other highly important features were noted during EDA. Figure 5 includes the top 10 features to illustrate that the subsequent 5 most important features follow closely in terms of their importance scores. 
 
 To formally address our research question, the five most predictive features are:
 

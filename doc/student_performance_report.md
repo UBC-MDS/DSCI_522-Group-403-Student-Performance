@@ -14,28 +14,30 @@ This project is proudly brought to you by:
 
 Our selected data set summarizes Portuguese high school student’s
 academic performance in both Math and Portuguese. For this project we
-are trying to answer the question: what are the top five features that
+are trying to answer the question: **what are the top five features that
 most strongly predict high school student’s performances in their
-Portuguese language course? In developing social initiatives to improve
-student scores, it could be immensely useful to understand what
-attributes play a strong role in predicting performance. Without
-identifying these key factors, such initiatives would likely be less
-effective and would fail to provide a high return on the school board or
-government’s investment.
+Portuguese language course?**
 
-The data set was sourced from the UCI Machine Learning Repository
-(Cortez 2014) which can be found
-[here](https://archive.ics.uci.edu/ml/datasets/Student+Performance), and
-the original research paper (Cortez and Silva 2008) can be found
-[here.](http://www3.dsi.uminho.pt/pcortez/student.pdf) The data was
-compiled from official school reports as well as questionnaires provided
-to students. Attributes include the student grades, demographic, social
-and other school related features. Two datasets are provided regarding
-the performance in two distinct subjects: Mathematics (`mat`) and
-Portuguese language (`por`), though these datasets do not correspond to
-the same students. For the purpose of this analysis, we have decided to
-focus only on the Portuguese data set to investigate which student
-attributes are the strongest predictors of performance in that subject.
+In developing social initiatives to improve student scores, it could be
+immensely useful to understand what attributes play a strong role in
+predicting performance. Without identifying these key factors, such
+initiatives would likely be less effective and would fail to provide a
+high return on the school board or government’s investment.
+
+The data set was sourced from the [UCI Machine Learning
+Repository](https://archive.ics.uci.edu/ml/datasets/Student+Performance)
+(Cortez 2014), which was part of an [original research
+paper](http://www3.dsi.uminho.pt/pcortez/student.pdf) (Cortez and Silva
+2008). The data was compiled from official school reports as well as
+questionnaires provided to students. Attributes of the datasets include
+the student grades, demographic, social and other school related
+features. Two datasets are provided regarding the performance in two
+distinct subjects: Mathematics (`mat`) and Portuguese language (`por`),
+though these datasets do not correspond to the same students.
+
+For the purpose of this analysis, we are focusing only on the
+**Portuguese** data set to investigate which student attributes are the
+strongest predictors of performance in that subject.
 
 Some key highlights regarding the data set’s attributes:
 
@@ -52,10 +54,10 @@ Some key highlights regarding the data set’s attributes:
 ## Exploratory Data Analysis
 
 Before building our model, we partitioned the data into a training and
-test set (split 80%:20%) and performed exploratory data analysis to
-investigate the distribution of our predictive features and explore
-whether there are any highly correlated features we might want to omit
-from our
+test set (split 80%:20%) and performed exploratory data analysis (EDA)
+to investigate the distribution of our predictive features. The EDA was
+initiated by determining if there are any highly correlated features
+that we might want to omit from our
 analysis.
 
 ### Feature Correlations:
@@ -68,15 +70,15 @@ analysis.
 
 </center>
 
-As we can see from Figure 1, our target attribute `G3` has a strong
+As seen from Figure 1, our target attribute `G3` has a strong
 correlation with attributes `G2` and `G1`. This occurs because `G3` is
 the grade issued at the end of the year, while `G1` and `G2` correspond
-to the grades for the 1st and 2nd school terms of that year. Though it
-will be more difficult to get accurate predictions without these
-features, it makes sense to drop them in light of our research question
-and motivations outlined above. We’re more interested in which
-attributes, other than recent academic performance, will be most
-predictive of future academic performance.
+to the grades for the 1st and 2nd school terms of that year. We are more
+interested in which attributes, other than recent academic performance,
+that will be most predictive of academic performance. Though it will be
+more difficult to get accurate predictions without these features,
+**both `G1` and `G2` features will be omitted** in light of our research
+question and motivations outlined above.
 
 ### Variable Distributions:
 
@@ -92,8 +94,8 @@ that some of the most noteworthy features include student’s past number
 of course failures (`failures`), parental education levels (`Medu`,
 `Fedu`), alcohol consumption on weekdays and the weekend (`Dalc`,
 `Walc`), and the school they attended (`school`). Each of these appears
-to show a clear trend with respect to G3, so we would expect to see some
-of these features having strong predictive power in the machine learning
+to show a clear trend with respect to G3, so we would expect some of
+these features having strong predictive power in the machine learning
 models we
 develop.
 
@@ -153,26 +155,26 @@ Hyperparameters were tuned with the Bayesian Optimization package
 (Nogueira 2017) using 10 fold cross validation. For more details on the
 best hyperparameters for each model, please find the stored outputs in
 the [data outputs folder](../data/outputs/). The validation results for
-each model type is shown in the following:
+each model type are shown in the following:
 
-| Model        | cv\_rmse\_score |
-| :----------- | --------------: |
-| lm\_lasso    |        2.740778 |
-| lm\_ridge    |        2.735043 |
-| randomforest |        2.670020 |
-| xgb          |        2.704398 |
-| lgbm         |        2.726576 |
+|    Model     | cv\_rmse\_score |
+| :----------: | :-------------: |
+|  lm\_lasso   |    2.740778     |
+|  lm\_ridge   |    2.735043     |
+| randomforest |    2.670020     |
+|     xgb      |    2.704398     |
+|     lgbm     |    2.726576     |
 
-Using the preprocessed test data, we scored all 5 of the tuned models.
-The test results for each tuned model type is as shown:
+Using the preprocessed test data, we scored all five tuned models. The
+test results for each tuned model type are as shown:
 
-| Model        | test\_rmse\_score |
-| :----------- | ----------------: |
-| randomforest |          2.417248 |
-| xgb          |          2.452847 |
-| lm\_ridge    |          2.481202 |
-| lm\_lasso    |          2.483605 |
-| lgbm         |          2.577540 |
+|    Model     | test\_rmse\_score |
+| :----------: | :---------------: |
+| randomforest |     2.417248      |
+|     xgb      |     2.452847      |
+|  lm\_ridge   |     2.481202      |
+|  lm\_lasso   |     2.483605      |
+|     lgbm     |     2.577540      |
 
 Based on the results, the RandomForest model performed best with a RMSE
 of 2.417.
@@ -193,7 +195,7 @@ as follows:
 For the most part, the results appear to be inline with our expectations
 based on the features identified during the EDA process. `failures` and
 `absences` are the clear leaders, while many of the other highly
-important features were noted during EDA. Figure 7 includes the top 10
+important features were noted during EDA. Figure 5 includes the top 10
 features to illustrate that the subsequent 5 most important features
 follow closely in terms of their importance scores.
 
