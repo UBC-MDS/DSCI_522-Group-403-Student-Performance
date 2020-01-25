@@ -1,5 +1,7 @@
 ---
-output: github_document
+output:
+  github_document:
+      
 bibliography: student_performance_refs.bib
 ---
 
@@ -87,7 +89,7 @@ A total of 5 models were chosen using Scikit Learn [@sklearn_api], XGBoost [@Che
 - XGBoost Regressor  
 - LightGBM Regressor   
 
-The choice for model types stem from the feature extraction functionalities that they provide, which suit our analysis of top predictors features. Linear regression models can output the weights of each feature, while tree models can output the feature importances according to the node splitting.
+The choice for model types stem from the feature extraction functionalities that they provide, which is needed for our research question of finding the top predictive features. Linear regression models can output the weights of each feature, while tree models can output the feature importances according to the node splitting.
 
 We applied the following preprocessing techniques for the data:
 
@@ -149,11 +151,23 @@ We dropped features `G1` and `G2` after our EDA with the intent of removing feat
 For this analysis, we focused on only one of two available student performance data sets. We looked at student performance in Portuguese, rather than Math. In the future it would be interesting to explore whether the same model features are strong predictors across both subjects, or whether different subjects are predicted better by different features. We would be curious to see if performance in Math is strongly predicted by the 'going out with friends' attribute, for example.
 
 **Modelling assumptions:** 
-
-In our analysis, we assumed the target variable “G3” as a fully continuous variable and treated the overall problem as a regression. However, this is not actually true. Indeed, the variable can take on discrete values from 0-20 and values such as 1.115 or 19.333 were not observed. 
-
-One might then think to switch to rephrasing this problem as a multi-class classification instead. However, there is a clear ordering in the target variable and in particular, the distance between the predicted score G3 and the actual score is important. If we were to treat this as a classification problem, an error of predicting a G3 score of 5 for a true G3 of 20 would be viewed the same as an error of predicting a G3 score of 19 for the same student. This is also undesirable.
-
-In truth, our problem is neither regression or classification. Our problem instead is that of ordinal regression, which can be viewed as a middle ground. We wish to predict discrete labels while still respecting the relative nature of the labels themselves. Thus, a huge improvement to our analysis would be to switch to a better framework more suited for such a response.
-
+  
+In our analysis, we assumed the target `G3` as a fully continuous variable and treated the overall problem as a regression. However, this is not actually true. Indeed, the variable can only take on discrete values from 0-20 and values such as 1.115 or 19.333 are not possible.
+  
+One might then think to switch to rephrasing this problem as a multi-class classification instead. However, there is a clear ordering in the target variable and in particular, the distance between the predicted score G3 and the actual score is important. For example, suppose we have a student who is known to have a `G3` score of 20 and two candidate classifiers. One classifier predicts a G3 score of 5, and another predicts a G3 score of 19. In classification, both of these errors are treated equally even though the second classifier is much closer to the truth than the first. 
+  
+In summary, our problem is neither regression or classification. Our problem instead is that of ordinal regression, which can be viewed as a middle ground between the two. We wish to predict discrete labels while still respecting the relative nature of the labels themselves. Thus, a huge improvement to our analysis would be to switch to a better framework more suited for such a response.
+  
+**Feature Engineering:**
+  
+  There were a number of features that could possibly have been represented in a more informative way. In particular, there were quite a few ordinal features (such as `Dalc`, `Walc`, and `famrel`) that were represented as numeric features ranging from 1 to 5. This was done to preserve the natural ordering of the features, but it is not necessarily true that each of the levels should be evenly spaced between them. It could be the case that the jump from level 1 to level 2, for example, is much larger than the jump between level 4 and 5. 
+  
+A possible avenue to explore could be to make use of polynomial contrasts to account for this possibility.
+  
+**Using Variable Importance Scores:**
+  
+There are some problems associated with using variable importance scores to assess predictive performance, especially when features are collinear. Features that carry large amounts of the same information tend to get their importance scores "shared" between them. Intuitively, features that are nearly identical in information can be randomly chosen between them without any loss in model performance. The practical consequence of this is that some of the features have scores that are potentially much lower than they should be.
+  
+Variable importance scores can be corrected for this phenomenon and this may be worth exploring in the future.
+    
 # References
