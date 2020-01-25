@@ -44,11 +44,17 @@ To replicate the analysis, clone this GitHub repository, install the
 commands at the command line/terminal from the root directory of this
 project:
 
-    python src/data-download.py https://archive.ics.uci.edu/ml/machine-learning-databases/00320/student.zip --file_path=data/raw 
+    # download raw data from source
+    python src/data-download.py https://archive.ics.uci.edu/ml/machine-learning-databases/00320/student.zip --file_path=data/raw
+    
+    # wrangle data
     Rscript src/wrangling.R data/raw/student-por.csv data/processed
+    
+    # render plots for EDA section of report
+    
     Rscript src/eda.R data/processed/train.csv img
     
-    
+    # remove this below with our report
     Rscript -e "rmarkdown::render('src/breast_cancer_eda.Rmd')" 
 
 ## Dependencies
