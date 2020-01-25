@@ -12,19 +12,30 @@ This project is proudly brought to you by:
 
 ## Introduction
 
-For this project we are trying to answer the question: what are the top
+For this project we are trying to answer the question: 
+
+__What are the top
 five features that most strongly predict high school student’s
-performances in their Portuguese language course? To do so we are
-working with a UCI Machine Learning Repository (Cortez 2014) data set
-which can be found
-[here](https://archive.ics.uci.edu/ml/datasets/Student+Performance),
+performances in their Portuguese language course?__
+
+To do that, we are working with a [UCI Machine Learning Repository (Cortez 2014) data set](https://archive.ics.uci.edu/ml/datasets/Student+Performance),
 which includes student grades for two subjects (Math and Portuguese),
 demographic, social and other school related features.
 
-We conduct exploratory data analysis, fit and tune several predictive
-models, compare their performance, then report and comment on the most
-predictive features from the best model. Our final report can be found
-[here.](doc/student_performance_report.md)
+The project is segmented into the various phases:
+ - [Downloading of dataset](./src/data-download.py)
+ - [Wrangling and splitting of train versus test set](./src/wrangling.R)
+ - [Performing exploratory data analysis](./src/eda.R) 
+ - [Fit and tune several predictive models with performance comparison, while extracting out the top
+predictive features from the best model](./src/modelling.py) 
+
+<center>
+
+<img src="./img/ranked_features.png" title="Ranked Features" width="50%" height="50%" align="middle" />
+
+</center>
+
+A detailed analysis and conclusion on the top 5 predictors can be found in our [final report.](doc/student_performance_report.md)
 
 ## Usage
 
@@ -59,9 +70,7 @@ project:
 
 ## License
 
-The Student Performance Predictors materials here are licensed under the
-Creative Commons Attribution 2.5 Canada License (CC BY 2.5 CA). If
-re-using/re-mixing please provide attribution and link to this webpage.
+The Student Performance Predictors materials here are licensed under the Creative Commons Attribution 2.5 Canada License (CC BY 2.5 CA). If re-using/re-mixing please provide attribution and link to this webpage.
 
 # References
 
