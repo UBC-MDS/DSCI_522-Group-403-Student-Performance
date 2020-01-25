@@ -3,11 +3,20 @@ output: github_document
 bibliography: student_performance_refs.bib
 ---
 
-# DSCI522 Group 403 - Student Performance Report
 ```{r include=FALSE}
 library(knitr)
 library(tidyverse)
 ```
+
+# DSCI522 Group 403 - Student Performance Predictors Report
+
+Investigating the predictors of Portuguese high school student performance
+
+This project is proudly brought to you by:
+
+- [Brayden Tang](https://github.com/braydentang1)
+- [Kenneth Foo](https://github.com/kfoofw)
+- [Brendon Campbell](https://github.com/brendoncampbell)
 
 ## Motivation & Data Set
 

@@ -1,5 +1,14 @@
 
-# DSCI522 Group 403 - Student Performance Report
+# DSCI522 Group 403 - Student Performance Predictors Report
+
+Investigating the predictors of Portuguese high school student
+performance
+
+This project is proudly brought to you by:
+
+  - [Brayden Tang](https://github.com/braydentang1)
+  - [Kenneth Foo](https://github.com/kfoofw)
+  - [Brendon Campbell](https://github.com/brendoncampbell)
 
 ## Motivation & Data Set
 
@@ -82,7 +91,7 @@ develop.
 
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
-**Figure 3 - Ridgeplot of Absences Feature **
+**Figure 3 - Ridgeplot of Absences Feature**
 
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of
 `absences` counts, indicating this may be a useful predictive feature as
@@ -109,7 +118,7 @@ A total of 5 models were chosen using Scikit Learn (Buitinck et al.
 
   - Linear Regression with Lasso (L1)  
   - Linear Regression with Ridge (L2)  
-  - Random Forest (L1)  
+  - Random Forest
   - XGBoost Regressor  
   - LightGBM Regressor
 
@@ -157,7 +166,7 @@ of 2.417.
 The top 10 ranked features from our Random Forest regression model were
 as follows:
 
-![alt tag](../img/ranked_features.png) **Figure 7 - Ranked Features for
+![alt tag](../img/ranked_features.png) **Figure 5 - Ranked Features for
 Random Forest Model**
 
 For the most part, the results appear to be inline with our expectations
