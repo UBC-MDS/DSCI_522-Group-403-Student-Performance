@@ -22,13 +22,13 @@ This project is proudly brought to you by:
 
 ## Motivation & Data Set
 
-Our selected data set summarizes Portuguese high school student's academic performance in both Math and Portuguese. For this project we are trying to answer the question: __what are the top five features that most strongly predict high school student's performances in their Portuguese language course?__ 
+In developing social initiatives to improve student scores, it could be immensely useful to understand what attributes play a strong role in predicting predicting student performances on various subjects. Without identifying these key factors, such initiatives would likely be less effective and would fail to provide a high return on the school board or government's investment.
 
-In developing social initiatives to improve student scores, it could be immensely useful to understand what attributes play a strong role in predicting performance. Without identifying these key factors, such initiatives would likely be less effective and would fail to provide a high return on the school board or government's investment.
+Our selected data set summarizes Portuguese high school student's academic performance in both Math and Portuguese. For this project we are trying to answer the question: __what are the top five features that most strongly predict high school student's performances in their Portuguese language course?__ 
 
 The data set was sourced from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Student+Performance) [@CortezUCI], which was part of an [original research paper](http://www3.dsi.uminho.pt/pcortez/student.pdf) [@Cortezetal]. The data was compiled from official school reports as well as questionnaires provided to students. Attributes of the datasets include the student grades, demographic, social and other school related features. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (`mat`) and Portuguese language (`por`), though these datasets do not correspond to the same students. 
 
-For the purpose of this analysis, we are focusing only on the __Portuguese__ data set to investigate which student attributes are the strongest predictors of performance in that subject.
+For the scope of this analysis, we are focusing only on the __Portuguese__ data set to investigate which student attributes are the strongest predictors of performance in that subject.
 
 Some key highlights regarding the data set's attributes:
 
@@ -44,36 +44,36 @@ Before building our model, we partitioned the data into a training and test set 
 
 ### Feature Correlations:
 
-<center>
+<p align = "center">
 <img src="../img/correlation_matrix.png" title="Feature Correlations" width="70%" height="70%" align="middle" />
 
 **Figure 1 - Feature Correlations**
-</center>
+</p>
 
 As seen from Figure 1, our target attribute `G3` has a strong correlation with attributes `G2` and `G1`. This occurs because `G3` is the grade issued at the end of the year, while `G1` and `G2` correspond to the grades for the 1st and 2nd school terms of that year. We are more interested in which attributes, other than recent academic performance, that will be most predictive of academic performance. Though it will be more difficult to get accurate predictions without these features, __both `G1` and `G2` features will be omitted__ in light of our research question and motivations outlined above. 
 
 ### Variable Distributions:
 
-<center>
+<p align = "center">
  ![alt tag](../img/box-plots.png)
 **Figure 2 - Distribution Boxplots for Categorical & Binary Features**
-</center>
+</p>
 
 Looking at the feature distribution boxplots in Figure 2, we can see that some of the most noteworthy features include student's past number of course failures (`failures`), parental education levels (`Medu`, `Fedu`), alcohol consumption on weekdays and the weekend (`Dalc`, `Walc`), and the school they attended (`school`). Each of these appears to show a clear trend with respect to G3, so we would expect some of these features having strong predictive power in the machine learning models we develop. 
 
-<center>
+<p align = "center">
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
 **Figure 3 - Ridgeplot of Absences Feature**
-</center>
+</p>
 
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of `absences` counts, indicating this may be a useful predictive feature as well.
 
-<center>
+<p align = "center">
 <img src="../img/g3_hist.png" title="Distribution of Response Variable" width="60%" height="60%" align="middle" />
 
 **Figure 4 - Distribution of Response Variable, G3**
-</center>
+</p>
 
 Finally, our response variable G3 shows an approximately normal distribution, with a mean of 11.87 and a median of 12 out of 20. There are some outliers at the low end (students with a score of 0), which ends up pulling down the mean value slightly.
 
@@ -96,7 +96,7 @@ We applied the following preprocessing techniques for the data:
 - Standard Scaling for numerical features
 - One-Hot-Encoding for binary/categorical features.
 
-Hyperparameters were tuned with the Bayesian Optimization package [@bayesopt] using 10 fold cross validation. For more details on the best hyperparameters for each model, please find the stored outputs in the [data outputs folder](../data/outputs/). The validation results for each model type are shown in the following:
+Hyperparameters were tuned with the Bayesian Optimization package [@bayesopt] using 10 fold cross validation. For more details on the best hyperparameters for each model, please find the stored outputs in the [data outputs folder](../data/outputs/). The validation results for each tuned model type are shown in the following:
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 cv_dat <- read_csv("../data/output/cv_results.csv")
@@ -122,11 +122,11 @@ Based on the results, the RandomForest model performed best with a RMSE of `r ro
 
 The top 10 ranked features from our Random Forest regression model were as follows:
 
-<center>
+<p align = "center">
  ![alt tag](../img/ranked_features.png)
 
 **Figure 5 - Ranked Features for Random Forest Model**
- </center>
+ </p>
 
 For the most part, the results appear to be inline with our expectations based on the features identified during the EDA process. `failures` and `absences` are the clear leaders, while many of the other highly important features were noted during EDA. Figure 5 includes the top 10 features to illustrate that the subsequent 5 most important features follow closely in terms of their importance scores. 
 
@@ -162,7 +162,7 @@ In summary, our problem is neither regression or classification. Our problem ins
   
   There were a number of features that could possibly have been represented in a more informative way. In particular, there were quite a few ordinal features (such as `Dalc`, `Walc`, and `famrel`) that were represented as numeric features ranging from 1 to 5. This was done to preserve the natural ordering of the features, but it is not necessarily true that each of the levels should be evenly spaced between them. It could be the case that the jump from level 1 to level 2, for example, is much larger than the jump between level 4 and 5. 
   
-A possible avenue to explore could be to make use of polynomial contrasts to account for this possibility.
+A possible avenue to explore could be to make use of [polynomial contrasts](https://en.wikipedia.org/wiki/Contrast_(statistics)#Sets_of_contrast) to account for this possibility.
   
 **Using Variable Importance Scores:**
   

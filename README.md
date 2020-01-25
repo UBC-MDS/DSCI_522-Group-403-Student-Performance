@@ -12,6 +12,8 @@ This project is proudly brought to you by:
 
 ## Introduction
 
+In developing social initiatives to improve student scores, it could be immensely useful to understand what attributes play a strong role in predicting student performances on various subjects. Without identifying these key factors, such initiatives would likely be less effective and would fail to provide a high return on the school board or government's investment.
+
 For this project we are trying to answer the question: 
 
 __What are the top
@@ -26,14 +28,13 @@ The project is segmented into the various phases:
  - [Downloading of dataset](./src/data-download.py)
  - [Wrangling and splitting of train versus test set](./src/wrangling.R)
  - [Performing exploratory data analysis](./src/eda.R) 
- - [Fit and tune several predictive models with performance comparison, while extracting out the top
-predictive features from the best model](./src/modelling.py) 
+ - [Fit and tune several predictive models with performance comparison, while extracting out the top predictive features from the best model](./src/modelling.py) 
 
-<center>
+<p align = "center">
 
-<img src="./img/ranked_features.png" title="Ranked Features" width="50%" height="50%" align="middle" />
+  <img src="./img/ranked_features.png" title="Ranked Features" width="80%" height="80%">
 
-</center>
+</p>
 
 A detailed analysis and conclusion on the top 5 predictors can be found in our [final report.](doc/student_performance_report.md)
 
@@ -52,9 +53,12 @@ project:
     
     # render plots for EDA section of report
     Rscript src/eda.R data/processed/train.csv img
+
+    # modelling and feature extraction
+    python src/modelling.py --train_data_file_path="./data/processed/train.csv" --test_data_file_path="./data/processed/test.csv" --csv_output_dir_path="./data/output/" --image_output_dir_path="./img/"
     
-    # remove this below with our report
-    Rscript -e "rmarkdown::render('src/breast_cancer_eda.Rmd')" 
+    # generate report
+    Rscript -e "rmarkdown::render('doc/student_performance_report.Rmd')" 
 
 ## Dependencies
 

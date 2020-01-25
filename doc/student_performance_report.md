@@ -12,17 +12,18 @@ This project is proudly brought to you by:
 
 ## Motivation & Data Set
 
+In developing social initiatives to improve student scores, it could be
+immensely useful to understand what attributes play a strong role in
+predicting predicting student performances on various subjects. Without
+identifying these key factors, such initiatives would likely be less
+effective and would fail to provide a high return on the school board or
+government’s investment.
+
 Our selected data set summarizes Portuguese high school student’s
 academic performance in both Math and Portuguese. For this project we
 are trying to answer the question: **what are the top five features that
 most strongly predict high school student’s performances in their
 Portuguese language course?**
-
-In developing social initiatives to improve student scores, it could be
-immensely useful to understand what attributes play a strong role in
-predicting performance. Without identifying these key factors, such
-initiatives would likely be less effective and would fail to provide a
-high return on the school board or government’s investment.
 
 The data set was sourced from the [UCI Machine Learning
 Repository](https://archive.ics.uci.edu/ml/datasets/Student+Performance)
@@ -35,7 +36,7 @@ features. Two datasets are provided regarding the performance in two
 distinct subjects: Mathematics (`mat`) and Portuguese language (`por`),
 though these datasets do not correspond to the same students.
 
-For the purpose of this analysis, we are focusing only on the
+For the scope of this analysis, we are focusing only on the
 **Portuguese** data set to investigate which student attributes are the
 strongest predictors of performance in that subject.
 
@@ -62,13 +63,13 @@ analysis.
 
 ### Feature Correlations:
 
-<center>
+<p align="center">
 
 <img src="../img/correlation_matrix.png" title="Feature Correlations" width="70%" height="70%" align="middle" />
 
 **Figure 1 - Feature Correlations**
 
-</center>
+</p>
 
 As seen from Figure 1, our target attribute `G3` has a strong
 correlation with attributes `G2` and `G1`. This occurs because `G3` is
@@ -82,12 +83,12 @@ question and motivations outlined above.
 
 ### Variable Distributions:
 
-<center>
+<p align="center">
 
 ![alt tag](../img/box-plots.png) **Figure 2 - Distribution Boxplots for
 Categorical & Binary Features**
 
-</center>
+</p>
 
 Looking at the feature distribution boxplots in Figure 2, we can see
 that some of the most noteworthy features include student’s past number
@@ -99,25 +100,25 @@ these features having strong predictive power in the machine learning
 models we
 develop.
 
-<center>
+<p align="center">
 
 <img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
 **Figure 3 - Ridgeplot of Absences Feature**
 
-</center>
+</p>
 
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of
 `absences` counts, indicating this may be a useful predictive feature as
 well.
 
-<center>
+<p align="center">
 
 <img src="../img/g3_hist.png" title="Distribution of Response Variable" width="60%" height="60%" align="middle" />
 
 **Figure 4 - Distribution of Response Variable, G3**
 
-</center>
+</p>
 
 Finally, our response variable G3 shows an approximately normal
 distribution, with a mean of 11.87 and a median of 12 out of 20. There
@@ -155,7 +156,7 @@ Hyperparameters were tuned with the Bayesian Optimization package
 (Nogueira 2017) using 10 fold cross validation. For more details on the
 best hyperparameters for each model, please find the stored outputs in
 the [data outputs folder](../data/outputs/). The validation results for
-each model type are shown in the following:
+each tuned model type are shown in the following:
 
 |    Model     | cv\_rmse\_score |
 | :----------: | :-------------: |
@@ -184,13 +185,13 @@ of 2.417.
 The top 10 ranked features from our Random Forest regression model were
 as follows:
 
-<center>
+<p align="center">
 
 ![alt tag](../img/ranked_features.png)
 
 **Figure 5 - Ranked Features for Random Forest Model**
 
-</center>
+</p>
 
 For the most part, the results appear to be inline with our expectations
 based on the features identified during the EDA process. `failures` and
@@ -271,8 +272,9 @@ true that each of the levels should be evenly spaced between them. It
 could be the case that the jump from level 1 to level 2, for example, is
 much larger than the jump between level 4 and 5.
 
-A possible avenue to explore could be to make use of polynomial
-contrasts to account for this possibility.
+A possible avenue to explore could be to make use of [polynomial
+contrasts](https://en.wikipedia.org/wiki/Contrast_\(statistics\)#Sets_of_contrast)
+to account for this possibility.
 
 **Using Variable Importance Scores:**
 
