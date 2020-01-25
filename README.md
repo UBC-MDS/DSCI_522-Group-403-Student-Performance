@@ -51,7 +51,6 @@ project:
     Rscript src/wrangling.R data/raw/student-por.csv data/processed
     
     # render plots for EDA section of report
-    
     Rscript src/eda.R data/processed/train.csv img
     
     # remove this below with our report
