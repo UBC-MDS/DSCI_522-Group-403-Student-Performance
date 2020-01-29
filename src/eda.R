@@ -84,7 +84,6 @@ filename = paste(directory_out, "/absences.png", sep = ""))
 
 ggsave(ggplot(data = train_data, aes(x = G3, y = ..density..)) +
   geom_histogram(binwidth = 1) +
-  geom_density() +
   theme_minimal() +
   annotate("label", x = 3, y = 0.13, label = paste(
     "Mean:",
