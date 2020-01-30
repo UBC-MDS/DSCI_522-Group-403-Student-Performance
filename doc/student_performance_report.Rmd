@@ -100,16 +100,21 @@ Hyperparameters were tuned with the Bayesian Optimization package [@bayesopt] us
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 cv_dat <- read_csv("../data/output/cv_results.csv")
+test_rmse_dat <- read_csv("../data/output/final_results.csv")
 colnames(cv_dat) <- c("Model", "cv_rmse_score")
+colnames(test_rmse_dat) <- c("Model", "test_rmse_score")
+
+combined_data <- merge(cv_dat, test_rmse_dat) %>% arrange(test_rmse_score)
+
+cv_dat <- combined_data %>% select(Model, cv_rmse_score)
 
 kable(cv_dat, align ="c")
 ```
 
-Using the preprocessed test data, we scored all five tuned models. The test results for each tuned model type are as shown:
+Using the preprocessed test data, we scored all five tuned models. The test results for each tuned model type are as shown below:
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
-test_rmse_dat <- read_csv("../data/output/final_results.csv")
-colnames(test_rmse_dat) <- c("Model", "test_rmse_score")
+test_rmse_dat <- combined_data %>% select(Model, test_rmse_score)
 
 kable(test_rmse_dat, align = "c")
 
