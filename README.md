@@ -45,20 +45,13 @@ To replicate the analysis, clone this GitHub repository, install the
 commands at the command line/terminal from the root directory of this
 project:
 
-    # download raw data from source
-    python src/data-download.py https://archive.ics.uci.edu/ml/machine-learning-databases/00320/student.zip --file_path=data/raw
-    
-    # wrangle data
-    Rscript src/wrangling.R data/raw/student-por.csv data/processed
-    
-    # render plots for EDA section of report
-    Rscript src/eda.R data/processed/train.csv img
+    make all
 
-    # modelling and feature extraction
-    python src/modelling.py --train_data_file_path="./data/processed/train.csv" --test_data_file_path="./data/processed/test.csv" --csv_output_dir_path="./data/output/" --image_output_dir_path="./img/"
-    
-    # generate report
-    Rscript -e "rmarkdown::render('doc/student_performance_report.Rmd')" 
+To reset the repo to a clean state, with no intermediate, img, or result
+files, run the following command at the command line/terminal from the
+root directory of this project:
+
+    make clean
 
 ## Dependencies
 
