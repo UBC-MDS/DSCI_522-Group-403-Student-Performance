@@ -52,6 +52,12 @@ Some key highlights regarding the data set’s attributes:
     family educational support (`famsup`)
   - Count attributes such as number of days of absence (`absences`)
 
+For complete descriptions of each of the features, see the [UCI Machine
+Learning Repository
+page](https://archive.ics.uci.edu/ml/datasets/Student+Performance)
+(Cortez 2014) or refer to the `student.txt` file that accompanied the
+raw data files [here](../data/raw/student.txt).
+
 ## Exploratory Data Analysis
 
 Before building our model, we partitioned the data into a training and
@@ -167,8 +173,7 @@ each tuned model type are shown in the following:
 |     lgbm     |    2.726576     |
 
 Using the preprocessed test data, we scored all five tuned models. The
-test results for each tuned model type are as shown below in ranked test
-RMSE performances:
+test results for each tuned model type are as shown below:
 
 |    Model     | test\_rmse\_score |
 | :----------: | :---------------: |

@@ -37,6 +37,7 @@ Some key highlights regarding the data set's attributes:
 - Binary attributes such as home internet access (`internet`) or family educational support (`famsup`)
 - Count attributes such as number of days of absence (`absences`)
 
+For complete descriptions of each of the features, see the [UCI Machine Learning Repository page](https://archive.ics.uci.edu/ml/datasets/Student+Performance) [@CortezUCI] or refer to the `student.txt` file that accompanied the raw data files [here](../data/raw/student.txt).
 
 ## Exploratory Data Analysis
 
