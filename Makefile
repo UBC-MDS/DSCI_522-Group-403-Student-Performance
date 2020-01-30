@@ -2,7 +2,7 @@
 # author(s): Brendon Campbell
 # date: 2020-01-29
 
-all: doc/student_performance_report.md img/correlation_matrix.png img/box-plots.png img/absences.png img/g3_hist.png data/output/cv_results.csv data/output/feat_importance.csv data/output/final_results.csv data/output/lgbm_hyperparam.csv data/output/lmlasso_hyperparam.csv data/output/lmridge_hyperparam.csv data/output/rf_hyperparam.csv data/output/xgb_hyperparam.csv img/ranked_features.png
+all: data/output/cv_results.csv data/output/feat_importance.csv data/output/final_results.csv data/output/lgbm_hyperparam.csv data/output/lmlasso_hyperparam.csv data/output/lmridge_hyperparam.csv data/output/rf_hyperparam.csv data/output/xgb_hyperparam.csv img/ranked_features.png img/correlation_matrix.png img/box-plots.png img/absences.png img/g3_hist.png doc/student_performance_report.md
 
 # download data
 data/raw/student-por.csv data/raw/student-mat.csv data/raw/student-merge.R data/raw/student.txt: src/data-download.py
@@ -24,8 +24,8 @@ data/output/cv_results.csv data/output/feat_importance.csv data/output/final_res
 doc/student_performance_report.md: doc/student_performance_report.Rmd doc/student_performance_refs.bib
 	Rscript -e "rmarkdown::render('doc/student_performance_report.Rmd')"
 
-
 clean: 
-	rm -rf data
-	rm -rf img
+	rm -rf data/output/*
+	rm -rf data/processed/*
+	rm -rf img/*
 	rm -rf doc/student_performance_report.md doc/student_performance_report.html
