@@ -16,7 +16,7 @@ data/processed/test.csv data/processed/train.csv: src/wrangling.R data/raw/stude
 img/correlation_matrix.png img/box-plots.png img/absences.png img/g3_hist.png: src/eda.R data/processed/train.csv
 	Rscript src/eda.R data/processed/train.csv img
 
-# test model on unseen data
+# model selection and feature extraction
 data/output/cv_results.csv data/output/feat_importance.csv data/output/final_results.csv data/output/lgbm_hyperparam.csv data/output/lmlasso_hyperparam.csv data/output/lmridge_hyperparam.csv data/output/rf_hyperparam.csv data/output/xgb_hyperparam.csv img/ranked_features.png: data/processed/train.csv data/processed/test.csv 
 	python src/modelling.py --train_data_file_path="./data/processed/train.csv" --test_data_file_path="./data/processed/test.csv" --csv_output_dir_path="./data/output/" --image_output_dir_path="./img/"
 
@@ -25,10 +25,7 @@ doc/student_performance_report.md: doc/student_performance_report.Rmd doc/studen
 	Rscript -e "rmarkdown::render('doc/student_performance_report.Rmd')"
 
 
-
-#TODO
-
 clean: 
 	rm -rf data
-	rm -rf results
-	rm -rf doc/breast_cancer_predict_report.md doc/breast_cancer_predict_report.html
+	rm -rf img
+	rm -rf doc/student_performance_report.md doc/student_performance_report.html
