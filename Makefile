@@ -1,32 +1,32 @@
-# breast cancer data pipe
-# author: Tiffany Timbers
-# date: 2020-01-17
+# student performance data pipeline
+# author(s): Brendon Campbell
+# date: 2020-01-29
 
-all: results/final_model.rds results/accuracy_vs_k.png results/predictor_distributions_across_class.png results/final_model_quality.rds doc/breast_cancer_predict_report.md
+all: doc/student_performance_report.md img/correlation_matrix.png img/box-plots.png img/absences.png img/g3_hist.png data/output/cv_results.csv data/output/feat_importance.csv data/output/final_results.csv data/output/lgbm_hyperparam.csv data/output/lmlasso_hyperparam.csv data/output/lmridge_hyperparam.csv data/output/rf_hyperparam.csv data/output/xgb_hyperparam.csv img/ranked_features.png
 
 # download data
-data/raw/wdbc.feather: src/download_data.py
-	python src/download_data.py --out_type=feather --url=http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data --out_file=data/raw/wdbc.feather
+data/raw/student-por.csv data/raw/student-mat.csv data/raw/student-merge.R data/raw/student.txt: src/data-download.py
+	python src/data-download.py https://archive.ics.uci.edu/ml/machine-learning-databases/00320/student.zip --file_path=data/raw
+	
+# wrangle data (e.g. split into train & test)
+data/processed/test.csv data/processed/train.csv: src/wrangling.R data/raw/student-por.csv
+	Rscript src/wrangling.R data/raw/student-por.csv data/processed
 
-# pre-process data (e.g., scale and split into train & test)
-data/processed/training.feather data/processed/test.feather scale_factor.rds: src/pre_process_wisc.r data/raw/wdbc.feather
-	Rscript src/pre_process_wisc.r --input=data/raw/wdbc.feather --out_dir=data/processed 
-
-# exploratory data analysis - visualize predictor distributions across classes
-results/predictor_distributions_across_class.png: src/eda_wisc.r data/processed/training.feather
-	Rscript src/eda_wisc.r --train=data/processed/training.feather --out_dir=results
-
-# tune model (here, find K for k-nn using 30 fold cv with Cohen's Kappa)
-results/final_model.rds results/accuracy_vs_k.png: src/fit_breast_cancer_predict_model.r data/processed/training.feather
-	Rscript src/fit_breast_cancer_predict_model.r --train=data/processed/training.feather --out_dir=results
+# exploratory data analysis (e.g. visualize feature correlations and predictor distributions)
+img/correlation_matrix.png img/box-plots.png img/absences.png img/g3_hist.png: src/eda.R data/processed/train.csv
+	Rscript src/eda.R data/processed/train.csv img
 
 # test model on unseen data
-results/final_model_quality.rds: src/breast_cancer_test_results.r data/processed/test.feather
-	Rscript src/breast_cancer_test_results.r --test=data/processed/test.feather --out_dir=results
+data/output/cv_results.csv data/output/feat_importance.csv data/output/final_results.csv data/output/lgbm_hyperparam.csv data/output/lmlasso_hyperparam.csv data/output/lmridge_hyperparam.csv data/output/rf_hyperparam.csv data/output/xgb_hyperparam.csv img/ranked_features.png: data/processed/train.csv data/processed/test.csv 
+	python src/modelling.py --train_data_file_path="./data/processed/train.csv" --test_data_file_path="./data/processed/test.csv" --csv_output_dir_path="./data/output/" --image_output_dir_path="./img/"
 
 # render report
-doc/breast_cancer_predict_report.md: doc/breast_cancer_predict_report.Rmd doc/breast_cancer_refs.bib
-	Rscript -e "rmarkdown::render('doc/breast_cancer_predict_report.Rmd', output_format = 'github_document')"
+doc/student_performance_report.md: doc/student_performance_report.Rmd doc/student_performance_refs.bib
+	Rscript -e "rmarkdown::render('doc/student_performance_report.Rmd')"
+
+
+
+#TODO
 
 clean: 
 	rm -rf data
