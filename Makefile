@@ -21,7 +21,7 @@ data/output/cv_results.csv data/output/feat_importance.csv data/output/final_res
 	python src/modelling.py --train_data_file_path="./data/processed/train.csv" --test_data_file_path="./data/processed/test.csv" --csv_output_dir_path="./data/output/" --image_output_dir_path="./img/"
 
 # render report
-doc/student_performance_report.md: doc/student_performance_report.Rmd doc/student_performance_refs.bib data/output/cv_results.csv data/output/final_results.csv
+doc/student_performance_report.md: doc/student_performance_report.Rmd doc/student_performance_refs.bib data/output/cv_results.csv data/output/final_results.csv img/correlation_matrix.png img/box-plots.png img/absences.png img/g3_hist.png
 	Rscript -e "rmarkdown::render('doc/student_performance_report.Rmd')"
 
 clean: 
