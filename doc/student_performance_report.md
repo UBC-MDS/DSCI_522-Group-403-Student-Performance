@@ -166,9 +166,9 @@ each tuned model type are shown in the following:
 
 |    Model     | cv\_rmse\_score |
 | :----------: | :-------------: |
-| randomforest |    2.670020     |
-|     xgb      |    2.704398     |
-|  lm\_ridge   |    2.735043     |
+| randomforest |    2.683533     |
+|     xgb      |    2.707782     |
+|  lm\_ridge   |    2.735047     |
 |  lm\_lasso   |    2.740778     |
 |     lgbm     |    2.726576     |
 
@@ -178,8 +178,8 @@ test results for each tuned model type are as shown below:
 |    Model     | test\_rmse\_score |
 | :----------: | :---------------: |
 | randomforest |     2.417248      |
-|     xgb      |     2.452847      |
-|  lm\_ridge   |     2.481202      |
+|     xgb      |     2.452057      |
+|  lm\_ridge   |     2.481380      |
 |  lm\_lasso   |     2.483605      |
 |     lgbm     |     2.577540      |
 
