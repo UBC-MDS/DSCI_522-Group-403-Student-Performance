@@ -71,7 +71,7 @@ analysis.
 
 <p align="center">
 
-<img src="../img/correlation_matrix.png" title="Feature Correlations" width="70%" height="70%" align="middle" />
+<img src="../img/output/correlation_matrix.png" title="Feature Correlations" width="70%" height="70%" align="middle" />
 
 **Figure 1 - Feature Correlations**
 
@@ -91,8 +91,8 @@ question and motivations outlined above.
 
 <p align="center">
 
-![alt tag](../img/box-plots.png) **Figure 2 - Distribution Boxplots for
-Categorical & Binary Features**
+![alt tag](../img/output/box-plots.png) **Figure 2 - Distribution
+Boxplots for Categorical & Binary Features**
 
 </p>
 
@@ -108,7 +108,7 @@ develop.
 
 <p align="center">
 
-<img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
+<img src="../img/output/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
 **Figure 3 - Ridgeplot of Absences Feature**
 
@@ -120,7 +120,7 @@ well.
 
 <p align="center">
 
-<img src="../img/g3_hist.png" title="Distribution of Response Variable" width="60%" height="60%" align="middle" />
+<img src="../img/output/g3_hist.png" title="Distribution of Response Variable" width="60%" height="60%" align="middle" />
 
 **Figure 4 - Distribution of Response Variable, G3**
 
@@ -166,22 +166,22 @@ each tuned model type are shown in the following:
 
 |    Model     | cv\_rmse\_score |
 | :----------: | :-------------: |
-| randomforest |    2.683533     |
-|     xgb      |    2.707782     |
-|  lm\_ridge   |    2.735047     |
-|  lm\_lasso   |    2.740778     |
-|     lgbm     |    2.726576     |
+| randomforest |      2.684      |
+|     xgb      |      2.708      |
+|  lm\_ridge   |      2.735      |
+|  lm\_lasso   |      2.741      |
+|     lgbm     |      2.727      |
 
 Using the preprocessed test data, we scored all five tuned models. The
 test results for each tuned model type are as shown below:
 
 |    Model     | test\_rmse\_score |
 | :----------: | :---------------: |
-| randomforest |     2.417248      |
-|     xgb      |     2.452057      |
-|  lm\_ridge   |     2.481380      |
-|  lm\_lasso   |     2.483605      |
-|     lgbm     |     2.577540      |
+| randomforest |       2.417       |
+|     xgb      |       2.452       |
+|  lm\_ridge   |       2.481       |
+|  lm\_lasso   |       2.484       |
+|     lgbm     |       2.578       |
 
 Based on the results, the RandomForest model performed best with a RMSE
 of 2.417.
@@ -193,7 +193,7 @@ as follows:
 
 <p align="center">
 
-![alt tag](../img/ranked_features.png)
+![alt tag](../img/output/ranked_features.png)
 
 **Figure 5 - Ranked Features for Random Forest Model**
 
