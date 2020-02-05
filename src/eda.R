@@ -52,22 +52,24 @@ correlation_mat <- cor(train_data %>% select_if(is.numeric))
 ggsave(
   ggcorrplot::ggcorrplot(
     correlation_mat, 
-    show.diag = TRUE, 
+    show.diag = FALSE,
+    type = "lower",
     title = "Correlation Plot of All Features (Pearson's R)"), 
   filename = paste(directory_out, "/correlation_matrix.png", sep = ""))
 
 plotting_data <- train_data %>%
+  select(failures, Medu, Fedu, Dalc, Walc, school, G3) %>%
   gather(key = predictor, value = value, -G3) %>%
-  filter(!predictor %in% c("G1", "G2", "absences"))
+  filter(!predictor %in% c("G1", "G2", "absences")) 
 
-ggsave(ggplot(data = plotting_data, aes(x = value, y = G3)) +
-         facet_wrap(. ~ predictor, scale = "free", ncol = 3) +
-         geom_boxplot() +
-         coord_flip() +
-         theme_minimal() +
-         theme(axis.title.y = element_blank()),
-       filename = paste(directory_out, "/box-plots.png", sep = ""),
-       width = 9, height = 12)
+  ggsave(ggplot(data = plotting_data, aes(x = value, y = G3)) +
+           facet_wrap(. ~ predictor, scale = "free", ncol = 3) +
+           geom_boxplot() +
+           coord_flip() +
+           theme_minimal() +
+           theme(axis.title.y = element_blank()) +
+           labs(y = "G3 (Final Portuguese Score Achieved)"),
+       filename = paste(directory_out, "/box-plots.png", sep = ""))
 
 # Absences
 
@@ -77,7 +79,10 @@ ggsave(train_data %>%
   ggplot(., aes(x = absences, y = G3, group = G3)) +
   geom_density_ridges(fill = "mediumseagreen") +
   theme_ridges() + 
-  theme(legend.position = "none"), 
+  theme(legend.position = "none") + 
+  labs(y = "G3 (Final Portuguese Score Achieved)",
+       x = "Absences",
+       group = "G3 (Final Portuguese Score Achieved)"), 
 filename = paste(directory_out, "/absences.png", sep = ""))
 
 # G3 Distribution
@@ -96,7 +101,9 @@ ggsave(ggplot(data = train_data, aes(x = G3, y = ..density..)) +
     round(sd(train_data$G3), 2))) +
     geom_vline(aes(xintercept = quantile(train_data$G3, 0.1), color = "10th")) +
     geom_vline(aes(xintercept = quantile(train_data$G3, 0.9), color = "90th")) + 
-    labs(color = "Percentile"),
+    labs(color = "Percentile",
+         x = "G3 (Final Portuguese Score Achieved)",
+         y = "Frequency (normalized to 1)"),
   filename = paste(directory_out, "/g3_hist.png", sep= ""))
 
 paste("Plots successfully stored in: ", directory_out, sep = "")
