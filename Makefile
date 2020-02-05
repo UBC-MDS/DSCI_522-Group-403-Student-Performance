@@ -14,7 +14,7 @@ data/processed/test.csv data/processed/train.csv: src/wrangling.R data/raw/stude
 
 # exploratory data analysis (e.g. visualize feature correlations and predictor distributions)
 img/output/correlation_matrix.png img/output/box-plots.png img/output/absences.png img/output/g3_hist.png: src/eda.R data/processed/train.csv
-	Rscript src/eda.R data/processed/train.csv img/ouput
+	Rscript src/eda.R data/processed/train.csv img/output
 
 # model selection and feature extraction
 data/output/cv_results.csv data/output/feat_importance.csv data/output/final_results.csv data/output/lgbm_hyperparam.csv data/output/lmlasso_hyperparam.csv data/output/lmridge_hyperparam.csv data/output/rf_hyperparam.csv data/output/xgb_hyperparam.csv img/output/ranked_features.png: data/processed/train.csv data/processed/test.csv 
