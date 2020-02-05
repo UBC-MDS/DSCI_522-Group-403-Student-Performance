@@ -46,7 +46,7 @@ Before building our model, we partitioned the data into a training and test set 
 ### Feature Correlations:
 
 <p align = "center">
-<img src="../img/correlation_matrix.png" title="Feature Correlations" width="70%" height="70%" align="middle" />
+<img src="../img/output/correlation_matrix.png" title="Feature Correlations" width="70%" height="70%" align="middle" />
 
 **Figure 1 - Feature Correlations**
 </p>
@@ -56,14 +56,14 @@ As seen from Figure 1, our target attribute `G3` has a strong correlation with a
 ### Variable Distributions:
 
 <p align = "center">
- ![alt tag](../img/box-plots.png)
+ ![alt tag](../img/output/box-plots.png)
 **Figure 2 - Distribution Boxplots for Categorical & Binary Features**
 </p>
 
 Looking at the feature distribution boxplots in Figure 2, we can see that some of the most noteworthy features include student's past number of course failures (`failures`), parental education levels (`Medu`, `Fedu`), alcohol consumption on weekdays and the weekend (`Dalc`, `Walc`), and the school they attended (`school`). Each of these appears to show a clear trend with respect to G3, so we would expect some of these features having strong predictive power in the machine learning models we develop. 
 
 <p align = "center">
-<img src="../img/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
+<img src="../img/output/absences.png" title="Ridgeplot of Absences Feature" width="50%" height="50%" align="middle" />
 
 **Figure 3 - Ridgeplot of Absences Feature**
 </p>
@@ -71,7 +71,7 @@ Looking at the feature distribution boxplots in Figure 2, we can see that some o
 Similarly, Figure 3 shows that lower `G3` scores have longer tails of `absences` counts, indicating this may be a useful predictive feature as well.
 
 <p align = "center">
-<img src="../img/g3_hist.png" title="Distribution of Response Variable" width="60%" height="60%" align="middle" />
+<img src="../img/output/g3_hist.png" title="Distribution of Response Variable" width="60%" height="60%" align="middle" />
 
 **Figure 4 - Distribution of Response Variable, G3**
 </p>
@@ -109,7 +109,7 @@ combined_data <- merge(cv_dat, test_rmse_dat) %>% arrange(test_rmse_score)
 
 cv_dat <- combined_data %>% select(Model, cv_rmse_score)
 
-kable(cv_dat, align ="c")
+kable(cv_dat, align ="c", digits = 3)
 ```
 
 Using the preprocessed test data, we scored all five tuned models. The test results for each tuned model type are as shown below:
@@ -117,7 +117,7 @@ Using the preprocessed test data, we scored all five tuned models. The test resu
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 test_rmse_dat <- combined_data %>% select(Model, test_rmse_score)
 
-kable(test_rmse_dat, align = "c")
+kable(test_rmse_dat, align = "c", digits = 3)
 
 best_score <- test_rmse_dat %>% head(1) %>% select(test_rmse_score) %>% pull()
 ```
@@ -129,7 +129,7 @@ Based on the results, the RandomForest model performed best with a RMSE of `r ro
 The top 10 ranked features from our Random Forest regression model were as follows:
 
 <p align = "center">
- ![alt tag](../img/ranked_features.png)
+ ![alt tag](../img/output/ranked_features.png)
 
 **Figure 5 - Ranked Features for Random Forest Model**
  </p>

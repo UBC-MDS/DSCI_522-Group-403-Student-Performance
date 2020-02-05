@@ -541,7 +541,7 @@ def check_train_data_file_path():
         main(
             test_data_file_path="./data/processed/test.csv",
             csv_output_dir_path="./data/output/",
-            image_output_dir_path="./img/"
+            image_output_dir_path="./img/output/"
         )
         
 assert check_train_data_file_path() == None, "Invalid train_data_file_path of main function has failed."

@@ -32,7 +32,7 @@ The project is segmented into the various phases:
 
 <p align = "center">
 
-  <img src="./img/ranked_features.png" title="Ranked Features" width="80%" height="80%">
+  <img src="./img/output/ranked_features.png" title="Ranked Features" width="80%" height="80%">
 
 </p>
 
@@ -52,6 +52,14 @@ files, run the following command at the command line/terminal from the
 root directory of this project:
 
     make clean
+
+#### Makefile Dependency Diagram:
+
+<p align = "center">
+
+  <img src="./img/general/makefile_dependency_diagram.png" title="Dependency Diagram" width="80%" height="80%">
+  
+</p>
 
 ## Dependencies
 
