@@ -166,7 +166,7 @@ each tuned model type are shown in the following:
 
 |    Model     | cv\_rmse\_score |
 | :----------: | :-------------: |
-| randomforest |      2.674      |
+| randomforest |      2.651      |
 |     xgb      |      2.704      |
 |  lm\_ridge   |      2.735      |
 |  lm\_lasso   |      2.741      |
@@ -177,14 +177,14 @@ test results for each tuned model type are as shown below:
 
 |    Model     | test\_rmse\_score |
 | :----------: | :---------------: |
-| randomforest |       2.446       |
+| randomforest |       2.417       |
 |     xgb      |       2.453       |
 |  lm\_ridge   |       2.481       |
 |  lm\_lasso   |       2.484       |
 |     lgbm     |       2.578       |
 
 Based on the results, the RandomForest model performed best with a RMSE
-of 2.446.
+of 2.417.
 
 ## Ranked Features & Conclusions
 

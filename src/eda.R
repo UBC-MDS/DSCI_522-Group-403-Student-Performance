@@ -56,7 +56,7 @@ ggsave(
     type = "lower",
     title = "Correlation Plot of All Features (Pearson's R)"), 
   filename = paste(directory_out, "/correlation_matrix.png", sep = ""))
-  
+
 plotting_data <- train_data %>%
   select(failures, Medu, Fedu, Dalc, Walc, school, G3) %>%
   gather(key = predictor, value = value, -G3) %>%
