@@ -46,11 +46,11 @@ _note - the instructions in this section also depends on running this in a unix 
 
 To replicate the analysis, install [Docker](https://www.docker.com/get-started). Then clone this GitHub repository and run the following command at the command line/terminal from the root directory of this project:
 
-    docker run --rm -v /$(pwd):/home/highschool_portuguese_grades kfoofw/portuguese_grades make -C /home/highschool_portuguese_grades all
+    docker run --rm -v "/$(pwd):/home/highschool_portuguese_grades" kfoofw/portuguese_grades make -C /home/highschool_portuguese_grades all
 
 To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
 
-    docker run --rm -v /$(pwd):/home/highschool_portuguese_grades kfoofw/portuguese_grades make -C /home/highschool_portuguese_grades clean
+    docker run --rm -v "/$(pwd):/home/highschool_portuguese_grades" kfoofw/portuguese_grades make -C /home/highschool_portuguese_grades clean
 
 2. Without using Docker
 
