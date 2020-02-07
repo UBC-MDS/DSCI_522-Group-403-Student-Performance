@@ -41,7 +41,8 @@ A detailed analysis and conclusion on the top 5 predictors can be found in our [
 ## Usage
 
 1. Using Docker
-note - the instructions in this section also depends on running this in a unix shell (e.g., terminal or Git Bash)
+
+_note - the instructions in this section also depends on running this in a unix shell (e.g., terminal or Git Bash)_
 
 To replicate the analysis, install [Docker](https://www.docker.com/get-started). Then clone this GitHub repository and run the following command at the command line/terminal from the root directory of this project:
 
