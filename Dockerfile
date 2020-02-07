@@ -26,13 +26,13 @@ ENV PATH="/opt/conda/bin:${PATH}"
 # For rocker/rstudio authentication stuff
 CMD ["/bin/bash"]
 
-# Python packages
 RUN conda install -y -c anaconda docopt \
                         selenium \
                         altair vega_datasets && \
     conda install -c conda-forge  xgboost \
                                   lightgbm \
-                                  bayesian-optimization
+                                  bayesian-optimization && \
+    pip install scikit-learn==0.22.1
                                   
 # Install chromium and chromedriver
 RUN apt install -y chromium && apt-get install -y libnss3 && apt-get install unzip

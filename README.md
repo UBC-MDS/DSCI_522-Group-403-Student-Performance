@@ -40,6 +40,19 @@ A detailed analysis and conclusion on the top 5 predictors can be found in our [
 
 ## Usage
 
+1. Using Docker
+note - the instructions in this section also depends on running this in a unix shell (e.g., terminal or Git Bash)
+
+To replicate the analysis, install [Docker](https://www.docker.com/get-started). Then clone this GitHub repository and run the following command at the command line/terminal from the root directory of this project:
+
+    docker run --rm -v /$(pwd):/home/highschool_portuguese_grades kfoofw/portuguese_grades make -C /home/highschool_portuguese_grades
+
+To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
+
+    docker run --rm -v /$(pwd):/home/highschool_portuguese_grades kfoofw/portuguese_grades make -C /home/highschool_portuguese_grades clean
+
+2. Without using Docker
+
 To replicate the analysis, clone this GitHub repository, install the
 [dependencies](#dependencies) listed below, and run the following
 commands at the command line/terminal from the root directory of this
@@ -73,6 +86,7 @@ root directory of this project:
       - numpy==1.17.4 (Oliphant 2006)
       - xgboost==0.90 (Chen and Guestrin 2016)
       - lightgbm==2.3.0 (Ke et al. 2017)
+      - selenium==3.141.0
   - R version 3.6.1 (R Core Team 2019) and R packages:
       - docopt==0.6.1 (de Jonge 2018)
       - knitr==1.26 (Xie 2014)
@@ -81,6 +95,8 @@ root directory of this project:
       - ggridges==0.5.2 (Wilke 2020)
       - ggcorrplot==0.1.3 (Kassambara 2019)
       - testthat==2.2.1 (Wickham 2011)
+  - General:
+      - chromedriver==79.0.3945.130
 
 ## License
 
