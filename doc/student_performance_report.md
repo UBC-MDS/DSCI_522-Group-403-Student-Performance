@@ -166,8 +166,8 @@ each tuned model type are shown in the following:
 
 |    Model     | cv\_rmse\_score |
 | :----------: | :-------------: |
-| randomforest |      2.663      |
-|     xgb      |      2.702      |
+| randomforest |      2.651      |
+|     xgb      |      2.704      |
 |  lm\_ridge   |      2.735      |
 |  lm\_lasso   |      2.741      |
 |     lgbm     |      2.727      |
